@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+>
+    <testsuites>
+        <testsuite name="Test">
+            <directory suffix="Test.php">tests</directory>
+        </testsuite>
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./src</directory>
+        </include>
+    </coverage>
+    <php>
+        <env name="SIASN_MODE" value="training"/>
+        <env name="SIASN_DEBUG" value="false"/>
+        <env name="SIASN_WS_USERNAME" value=""/>
+        <env name="SIASN_WS_PASSWORD" value=""/>
+        <env name="SIASN_SSO_CLIENT_ID" value=""/>
+        <env name="SIASN_SSO_USERNAME" value=""/>
+        <env name="SIASN_SSO_PASSWORD" value=""/>
+        <env name="SIASN_CONST_INSTANSI_ID" value=""/>
+        <env name="SIASN_CONST_SATUAN_KERJA_ID" value=""/>
+        <env name="SIASN_GET_ENDPOINT_TEST" value=""/>
+    </php>
+</phpunit>

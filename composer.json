@@ -1,0 +1,54 @@
+{
+    "name": "kanekescom/laravel-siasn-api",
+    "description": "Library to consume the SIASN BKN API",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Achmad Hadi Kurnia",
+            "email": "imachmadhadikurnia@gmail.com",
+            "homepage": "https://achmadhadikurnia.com"
+        }
+    ],
+    "homepage": "https://github.com/kanekescom/laravel-siasn-api",
+    "keywords": [
+        "laravel",
+        "siasn",
+        "laravel-siasn-api",
+        "api",
+        "bkn"
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.0.1",
+        "illuminate/support": "^8.0|^9.0|^10.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Kanekescom\\Siasn\\Api\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kanekescom\\Siasn\\Api\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kanekescom\\Siasn\\SiasnServiceProvider"
+            ],
+            "aliases": {
+                "Siasn": "Kanekescom\\Siasn\\Facades\\Siasn"
+            }
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
