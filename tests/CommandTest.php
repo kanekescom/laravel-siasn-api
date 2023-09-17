@@ -65,4 +65,10 @@ class CommandTest extends TestCase
         $this->assertNull(cache('sso-token'));
         $this->assertNull(cache('ws-token'));
     }
+
+    /** @test */
+    public function can_get_data()
+    {
+        $this->artisan('siasn:get ' . env('SIASN_GET_ENDPOINT_TEST'))->assertSuccessful();
+    }
 }
