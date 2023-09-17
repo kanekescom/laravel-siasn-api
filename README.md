@@ -20,7 +20,7 @@ The package will automatically register itself.
 You can publish the config file with:
 
 ``` bash
-$ php artisan vendor:publish --provider="Kanekescom\Siasn\SiasnServiceProvider" --tag="config"
+$ php artisan vendor:publish --provider="Kanekescom\Siasn\Api\SiasnServiceProvider" --tag="config"
 ```
 
 ## Usage
