@@ -10,7 +10,7 @@ class Siasn extends Facade
     /**
      * Get the registered name of the component.
      *
-     * @see \Kanekescom\Siasn\Siasn
+     * @see \Kanekescom\Siasn\Api\Siasn
      *
      * @return string
      */
