@@ -1,5 +1,5 @@
 {
-    "name": "kanekescom/laravel-siasn",
+    "name": "kanekescom/laravel-siasn-api",
     "description": "Library to consume the SIASN BKN API",
     "type": "library",
     "license": "MIT",
@@ -10,11 +10,12 @@
             "homepage": "https://achmadhadikurnia.com"
         }
     ],
-    "homepage": "https://github.com/kanekescom/laravel-siasn",
+    "homepage": "https://github.com/kanekescom/laravel-siasn-api",
     "keywords": [
         "laravel",
         "siasn",
-        "laravel-siasn",
+        "laravel-siasn-api",
+        "api",
         "bkn"
     ],
     "require": {
