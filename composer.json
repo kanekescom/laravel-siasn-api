@@ -41,10 +41,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Kanekescom\\Siasn\\SiasnServiceProvider"
+                "Kanekescom\\Siasn\\Api\\SiasnServiceProvider"
             ],
             "aliases": {
-                "Siasn": "Kanekescom\\Siasn\\Facades\\Siasn"
+                "Siasn": "Kanekescom\\Siasn\\Api\\Facades\\Siasn"
             }
         }
     },
