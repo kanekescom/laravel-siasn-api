@@ -7,7 +7,7 @@ use Kanekescom\Siasn\Api\Credentials\Token;
 
 class Siasn
 {
-    private $request;
+    private $response;
 
     /**
      * Create a new instance.
@@ -17,7 +17,7 @@ class Siasn
         $ssoToken = Token::getSsoToken();
         $wsToken = Token::getWsToken();
 
-        $this->request = Http::retry(3, 100)
+        $this->response = Http::retry(3, 100)
             ->withOptions([
                 'debug' => SiasnConfig::getDebug(),
             ])->withHeaders([
@@ -35,8 +35,8 @@ class Siasn
      */
     public function __call($method, $parameters)
     {
-        if (method_exists($this->request, $method)) {
-            return call_user_func_array([$this->request, $method], $parameters);
+        if (method_exists($this->response, $method)) {
+            return call_user_func_array([$this->response, $method], $parameters);
         }
 
         throw new \BadMethodCallException("Method {$method} does not exist.");
@@ -50,8 +50,8 @@ class Siasn
      */
     public static function __callStatic($method, $parameters)
     {
-        if (method_exists((new static)->request, $method)) {
-            return call_user_func_array([(new static)->request, $method], $parameters);
+        if (method_exists((new static)->response, $method)) {
+            return call_user_func_array([(new static)->response, $method], $parameters);
         }
 
         throw new \BadMethodCallException("Method {$method} does not exist.");
