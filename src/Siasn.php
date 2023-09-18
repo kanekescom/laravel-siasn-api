@@ -9,7 +9,7 @@ class Siasn
 {
     private $request;
 
-    public function __construct()
+    public function __construct($base_url = null)
     {
         $ssoToken = Token::getSsoToken();
         $wsToken = Token::getWsToken();
@@ -21,7 +21,7 @@ class Siasn
                 'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
             ])->withToken(
                 $wsToken->access_token
-            )->baseUrl(SiasnConfig::getBaseUrl());
+            );
     }
 
     /**

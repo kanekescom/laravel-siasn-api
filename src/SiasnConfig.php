@@ -64,14 +64,6 @@ class SiasnConfig
     }
 
     /**
-     * Get base url.
-     */
-    public static function getBaseUrl(): string
-    {
-        return config('siasn.base_url.'.self::getMode());
-    }
-
-    /**
      * Get get const.
      */
     public static function getConst(): object

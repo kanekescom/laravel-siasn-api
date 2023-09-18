@@ -9,7 +9,7 @@ class GetDataTest extends TestCase
     /** @test */
     public function can_get_data_successful_status()
     {
-        $response = Siasn::get(env('SIASN_GET_ENDPOINT_TEST'));
+        $response = Siasn::get(env('SIASN_BASE_URL_ENDPOINT_TEST').env('SIASN_GET_ENDPOINT_TEST'));
 
         $this->assertTrue($response->successful());
     }
