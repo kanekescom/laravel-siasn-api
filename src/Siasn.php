@@ -9,7 +9,7 @@ class Siasn
 {
     private $request;
 
-    public function __construct($base_url = null)
+    public function __construct()
     {
         $ssoToken = Token::getSsoToken();
         $wsToken = Token::getWsToken();
