@@ -24,7 +24,6 @@
         <env name="SIASN_SSO_PASSWORD" value=""/>
         <env name="SIASN_CONST_INSTANSI_ID" value=""/>
         <env name="SIASN_CONST_SATUAN_KERJA_ID" value=""/>
-        <env name="SIASN_BASE_URL_ENDPOINT_TEST" value="https://apimws.bkn.go.id:8243/apisiasn/1.0"/>
-        <env name="SIASN_GET_ENDPOINT_TEST" value="/referensi/ref-unor"/>
+        <env name="SIASN_GET_ENDPOINT_TEST" value="https://apimws.bkn.go.id:8243/apisiasn/1.0/referensi/ref-unor"/>
     </php>
 </phpunit>
