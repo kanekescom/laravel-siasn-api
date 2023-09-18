@@ -3,7 +3,7 @@
 namespace Kanekescom\Siasn\Api\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
+use Kanekescom\Siasn\Api\Facades\Siasn;
 
 class GetData extends Command
 {
@@ -27,6 +27,6 @@ class GetData extends Command
      */
     public function handle()
     {
-        $this->info(json_encode(Http::siasn()->get($this->argument('endpoint'))->object(), JSON_PRETTY_PRINT));
+        $this->info(json_encode(Siasn::get($this->argument('endpoint'))->object(), JSON_PRETTY_PRINT));
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Kanekescom\Siasn\Api\Credentials;
 
+use Kanekescom\Siasn\Api\Exceptions\InvalidSsoCredentialsException;
+use Kanekescom\Siasn\Api\Exceptions\InvalidWsCredentialsException;
 use Kanekescom\Siasn\Api\SiasnConfig;
 
 class Token
@@ -12,7 +14,13 @@ class Token
     public static function getSsoToken()
     {
         return cache()->remember('sso-token', SiasnConfig::getSsoTokenAge(), function () {
-            return Sso::getToken()->object();
+            $ssoToken = Sso::getToken()->object();
+
+            if (blank(optional($ssoToken)->token_type) || blank(optional($ssoToken)->access_token)) {
+                throw new InvalidSsoCredentialsException('Invalid SSO user credentials.');
+            }
+
+            return $ssoToken;
         });
     }
 
@@ -22,7 +30,13 @@ class Token
     public static function getWsToken()
     {
         return cache()->remember('ws-token', SiasnConfig::getWsTokenAge(), function () {
-            return Ws::getToken()->object();
+            $wsToken = Ws::getToken()->object();
+
+            if (blank(optional($wsToken)->access_token)) {
+                throw new InvalidWsCredentialsException('Invalid WS user credentials.');
+            }
+
+            return $wsToken;
         });
     }
 }

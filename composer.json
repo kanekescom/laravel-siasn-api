@@ -46,6 +46,9 @@
             "aliases": {
                 "Siasn": "Kanekescom\\Siasn\\Api\\Facades\\Siasn"
             }
+        },
+        "branch-alias": {
+            "dev-main": "dev-main"
         }
     },
     "scripts": {
