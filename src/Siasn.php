@@ -9,6 +9,9 @@ class Siasn
 {
     private $request;
 
+    /**
+     * Create a new instance.
+     */
     public function __construct()
     {
         $ssoToken = Token::getSsoToken();
