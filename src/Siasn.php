@@ -11,8 +11,8 @@ class Siasn
 
     public function __construct()
     {
-        $wsToken = Token::getWsToken();
         $ssoToken = Token::getSsoToken();
+        $wsToken = Token::getWsToken();
 
         $this->request = Http::retry(3, 100)
             ->withOptions([
