@@ -69,6 +69,8 @@ class CommandTest extends TestCase
     /** @test */
     public function can_get_data()
     {
-        $this->artisan('siasn:get '.env('SIASN_GET_ENDPOINT_TEST'))->assertSuccessful();
+        $url = env('SIASN_BASE_URL_ENDPOINT_TEST').env('SIASN_GET_ENDPOINT_TEST');
+
+        $this->artisan('siasn:get '.$url)->assertSuccessful();
     }
 }

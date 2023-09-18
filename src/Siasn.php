@@ -21,7 +21,7 @@ class Siasn
                 'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
             ])->withToken(
                 $wsToken->access_token
-            )->baseUrl(SiasnConfig::getBaseUrl());
+            );
     }
 
     /**
