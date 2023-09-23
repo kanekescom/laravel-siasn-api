@@ -3,9 +3,9 @@
 namespace Kanekescom\Siasn\Api\Commands;
 
 use Illuminate\Console\Command;
+use Kanekescom\Siasn\Api\Credentials\Apim;
 use Kanekescom\Siasn\Api\Credentials\Sso;
 use Kanekescom\Siasn\Api\Credentials\Token;
-use Kanekescom\Siasn\Api\Credentials\Ws;
 
 class GenerateToken extends Command
 {
@@ -22,7 +22,7 @@ class GenerateToken extends Command
      *
      * @var string
      */
-    protected $description = 'Generate SSO and WS Token';
+    protected $description = 'Generate Apim and SSO Token';
 
     /**
      * Execute the console command.
@@ -30,16 +30,16 @@ class GenerateToken extends Command
     public function handle()
     {
         if ($this->option('fresh')) {
+            $apimToken = Apim::getToken()->object();
             $ssoToken = Sso::getToken()->object();
-            $wsToken = Ws::getToken()->object();
         } else {
+            $apimToken = Token::getApimToken();
             $ssoToken = Token::getSsoToken();
-            $wsToken = Token::getWsToken();
         }
 
         $this->info(json_encode([
             'sso' => $ssoToken,
-            'ws' => $wsToken,
+            'apim' => $apimToken,
         ], JSON_PRETTY_PRINT));
     }
 }

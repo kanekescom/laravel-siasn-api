@@ -5,24 +5,24 @@ namespace Kanekescom\Siasn\Api\Credentials;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Kanekescom\Siasn\Api\Contracts\Tokenize;
-use Kanekescom\Siasn\Api\Exceptions\InvalidWsCredentialsException;
+use Kanekescom\Siasn\Api\Exceptions\InvalidApimCredentialsException;
 use Kanekescom\Siasn\Api\SiasnConfig;
 
-class Ws implements Tokenize
+class Apim implements Tokenize
 {
     /**
-     * Get token from WS.
+     * Get token from Apim.
      */
     public static function getToken(): Response
     {
-        $credential = SiasnConfig::getWsCredential();
+        $credential = SiasnConfig::getApimCredential();
 
         if (blank($credential->username)) {
-            throw new InvalidWsCredentialsException('username must be set');
+            throw new InvalidApimCredentialsException('username must be set');
         }
 
         if (blank($credential->password)) {
-            throw new InvalidWsCredentialsException('password must be set');
+            throw new InvalidApimCredentialsException('password must be set');
         }
 
         return Http::withOptions([

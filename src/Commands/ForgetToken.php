@@ -25,9 +25,9 @@ class ForgetToken extends Command
      */
     public function handle()
     {
-        cache()->forget('ws-token');
+        cache()->forget('apim-token');
         cache()->forget('sso-token');
 
-        $this->comment('Tokens have been removed');
+        $this->comment('Tokens has been removed');
     }
 }

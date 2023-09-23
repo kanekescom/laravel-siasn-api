@@ -24,7 +24,7 @@ class SiasnServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/siasn.php', 'siasn');
+        $this->mergeConfigFrom(__DIR__.'/../config/siasn_api.php', 'siasn_api');
 
         // Register the service the package provides.
         $this->app->singleton(Siasn::class, function ($app) {
@@ -47,7 +47,7 @@ class SiasnServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__.'/../config/siasn.php' => config_path('siasn.php'),
+            __DIR__.'/../config/siasn_api.php' => config_path('siasn_api.php'),
         ], 'config');
     }
 
@@ -63,8 +63,8 @@ class SiasnServiceProvider extends ServiceProvider
         $this->commands([
             Commands\ForgetToken::class,
             Commands\GenerateToken::class,
+            Commands\GenerateApimToken::class,
             Commands\GenerateSsoToken::class,
-            Commands\GenerateWsToken::class,
             Commands\GetData::class,
         ]);
     }

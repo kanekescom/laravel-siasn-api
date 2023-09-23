@@ -17,8 +17,8 @@
     <php>
         <env name="SIASN_MODE" value="training"/>
         <env name="SIASN_DEBUG" value="false"/>
-        <env name="SIASN_WS_USERNAME" value=""/>
-        <env name="SIASN_WS_PASSWORD" value=""/>
+        <env name="SIASN_APIM_USERNAME" value=""/>
+        <env name="SIASN_APIM_PASSWORD" value=""/>
         <env name="SIASN_SSO_CLIENT_ID" value=""/>
         <env name="SIASN_SSO_USERNAME" value=""/>
         <env name="SIASN_SSO_PASSWORD" value=""/>
