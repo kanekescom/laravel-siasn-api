@@ -2,8 +2,8 @@
 
 namespace Kanekescom\Siasn\Api\Credentials;
 
+use Kanekescom\Siasn\Api\Exceptions\InvalidApimCredentialsException;
 use Kanekescom\Siasn\Api\Exceptions\InvalidSsoCredentialsException;
-use Kanekescom\Siasn\Api\Exceptions\InvalidWsCredentialsException;
 use Kanekescom\Siasn\Api\SiasnConfig;
 
 class Token
@@ -25,18 +25,18 @@ class Token
     }
 
     /**
-     * Get WS token.
+     * Get Apim token.
      */
-    public static function getWsToken()
+    public static function getApimToken()
     {
-        return cache()->remember('ws-token', SiasnConfig::getWsTokenAge(), function () {
-            $wsToken = Ws::getToken()->object();
+        return cache()->remember('apim-token', SiasnConfig::getApimTokenAge(), function () {
+            $apimToken = Apim::getToken()->object();
 
-            if (blank(optional($wsToken)->access_token)) {
-                throw new InvalidWsCredentialsException('Invalid WS user credentials.');
+            if (blank(optional($apimToken)->access_token)) {
+                throw new InvalidApimCredentialsException('Invalid Apim user credentials.');
             }
 
-            return $wsToken;
+            return $apimToken;
         });
     }
 }

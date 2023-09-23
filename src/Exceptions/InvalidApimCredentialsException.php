@@ -4,7 +4,7 @@ namespace Kanekescom\Siasn\Api\Exceptions;
 
 use Exception;
 
-class InvalidWsCredentialsException extends Exception
+class InvalidApimCredentialsException extends Exception
 {
     //
 }

@@ -3,17 +3,17 @@
 namespace Kanekescom\Siasn\Api\Commands;
 
 use Illuminate\Console\Command;
+use Kanekescom\Siasn\Api\Credentials\Apim;
 use Kanekescom\Siasn\Api\Credentials\Token;
-use Kanekescom\Siasn\Api\Credentials\Ws;
 
-class GenerateWsToken extends Command
+class GenerateApimToken extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'siasn:ws-token
+    protected $signature = 'siasn:apim-token
                             {--fresh : Always request new token}';
 
     /**
@@ -21,7 +21,7 @@ class GenerateWsToken extends Command
      *
      * @var string
      */
-    protected $description = 'Generate WS Token';
+    protected $description = 'Generate Apim Token';
 
     /**
      * Execute the console command.
@@ -29,9 +29,9 @@ class GenerateWsToken extends Command
     public function handle()
     {
         if ($this->option('fresh')) {
-            $token = Ws::getToken()->object();
+            $token = Apim::getToken()->object();
         } else {
-            $token = Token::getWsToken();
+            $token = Token::getApimToken();
         }
 
         $this->info(json_encode($token, JSON_PRETTY_PRINT));

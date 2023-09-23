@@ -14,8 +14,8 @@ class Siasn
      */
     public function __construct()
     {
+        $apimToken = Token::getApimToken();
         $ssoToken = Token::getSsoToken();
-        $wsToken = Token::getWsToken();
 
         $this->response = Http::retry(3, 100)
             ->withOptions([
@@ -23,7 +23,7 @@ class Siasn
             ])->withHeaders([
                 'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
             ])->withToken(
-                $wsToken->access_token
+                $apimToken->access_token
             );
     }
 

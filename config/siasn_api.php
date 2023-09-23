@@ -40,6 +40,22 @@ return [
     |
     */
 
+    'apim' => [
+        'production' => [
+            'url' => 'https://apimws.bkn.go.id/oauth2/token',
+            'grant_type' => 'client_credentials',
+            'username' => env('SIASN_APIM_USERNAME'),
+            'password' => env('SIASN_APIM_PASSWORD'),
+        ],
+
+        'training' => [
+            'url' => 'https://training-apimws.bkn.go.id/oauth2/token',
+            'grant_type' => 'client_credentials',
+            'username' => env('TRAINING_SIASN_APIM_USERNAME'),
+            'password' => env('TRAINING_SIASN_APIM_PASSWORD'),
+        ],
+    ],
+
     'sso' => [
         'production' => [
             'url' => 'https://sso-siasn.bkn.go.id/auth/realms/public-siasn/protocol/openid-connect/token',
@@ -55,22 +71,6 @@ return [
             'client_id' => env('TRAINING_SIASN_SSO_CLIENT_ID'),
             'username' => env('TRAINING_SIASN_SSO_USERNAME'),
             'password' => env('TRAINING_SIASN_SSO_PASSWORD'),
-        ],
-    ],
-
-    'ws' => [
-        'production' => [
-            'url' => 'https://apimws.bkn.go.id/oauth2/token',
-            'grant_type' => 'client_credentials',
-            'username' => env('SIASN_WS_USERNAME'),
-            'password' => env('SIASN_WS_PASSWORD'),
-        ],
-
-        'training' => [
-            'url' => 'https://training-apimws.bkn.go.id/oauth2/token',
-            'grant_type' => 'client_credentials',
-            'username' => env('TRAINING_SIASN_WS_USERNAME'),
-            'password' => env('TRAINING_SIASN_WS_PASSWORD'),
         ],
     ],
 
@@ -98,8 +98,8 @@ return [
     */
 
     'token_age' => [
+        'apim' => env('SIASN_APIM_TOKEN_AGE', 3600 - 60),
         'sso' => env('SIASN_SSO_TOKEN_AGE', 43200 - 60),
-        'ws' => env('SIASN_WS_TOKEN_AGE', 3600 - 60),
     ],
 
 ];
