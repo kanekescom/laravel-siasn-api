@@ -5,7 +5,7 @@ namespace Kanekescom\Siasn\Api\Commands;
 use Illuminate\Console\Command;
 use Kanekescom\Siasn\Api\Facades\Siasn;
 
-class GetData extends Command
+class GetEndpoint extends Command
 {
     /**
      * The name and signature of the console command.
@@ -20,7 +20,7 @@ class GetData extends Command
      *
      * @var string
      */
-    protected $description = 'Consume API endpoint';
+    protected $description = 'Consume endpoint on SIASN API';
 
     /**
      * Execute the console command.

@@ -65,7 +65,7 @@ class SiasnServiceProvider extends ServiceProvider
             Commands\GenerateToken::class,
             Commands\GenerateApimToken::class,
             Commands\GenerateSsoToken::class,
-            Commands\GetData::class,
+            Commands\GetEndpoint::class,
         ]);
     }
 

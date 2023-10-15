@@ -1,6 +1,6 @@
 {
     "name": "kanekescom/laravel-siasn-api",
-    "description": "Library to consume the SIASN BKN API",
+    "description": "SIASN REST API Client for Laravel",
     "type": "library",
     "license": "MIT",
     "authors": [
