@@ -2,16 +2,25 @@
 
 namespace Kanekescom\Siasn\Api\Tests;
 
-abstract class TestCase extends \Orchestra\Testbench\TestCase
+use Kanekescom\Siasn\Api\SiasnServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
+
+class TestCase extends Orchestra
 {
-    /**
-     * @param  \Illuminate\Foundation\Application  $app
-     * @return array
-     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+    }
+
     protected function getPackageProviders($app)
     {
         return [
-            \Kanekescom\Siasn\Api\SiasnServiceProvider::class,
+            SiasnServiceProvider::class,
         ];
+    }
+
+    public function getEnvironmentSetUp($app)
+    {
+        //
     }
 }

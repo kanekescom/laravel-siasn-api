@@ -1,15 +1,15 @@
 <?php
 
-namespace Kanekescom\Siasn\Api;
+namespace Kanekescom\Siasn\Api\Helpers;
 
-class SiasnConfig
+class Config
 {
     /**
      * Get mode.
      */
     public static function getMode(): string
     {
-        return config('siasn_api.mode');
+        return config('siasn-api.mode');
     }
 
     /**
@@ -33,7 +33,7 @@ class SiasnConfig
      */
     public static function getDebug(): bool
     {
-        return config('siasn_api.debug');
+        return config('siasn-api.debug');
     }
 
     /**
@@ -42,10 +42,10 @@ class SiasnConfig
     public static function getApimCredential(): object
     {
         return (object) [
-            'url' => config('siasn_api.apim.'.self::getMode().'.url'),
-            'username' => config('siasn_api.apim.'.self::getMode().'.username'),
-            'password' => config('siasn_api.apim.'.self::getMode().'.password'),
-            'grant_type' => config('siasn_api.apim.'.self::getMode().'.grant_type'),
+            'url' => config('siasn-api.apim.'.self::getMode().'.url'),
+            'username' => config('siasn-api.apim.'.self::getMode().'.username'),
+            'password' => config('siasn-api.apim.'.self::getMode().'.password'),
+            'grant_type' => config('siasn-api.apim.'.self::getMode().'.grant_type'),
         ];
     }
 
@@ -55,11 +55,11 @@ class SiasnConfig
     public static function getSsoCredential(): object
     {
         return (object) [
-            'url' => config('siasn_api.sso.'.self::getMode().'.url'),
-            'client_id' => config('siasn_api.sso.'.self::getMode().'.client_id'),
-            'username' => config('siasn_api.sso.'.self::getMode().'.username'),
-            'password' => config('siasn_api.sso.'.self::getMode().'.password'),
-            'grant_type' => config('siasn_api.sso.'.self::getMode().'.grant_type'),
+            'url' => config('siasn-api.sso.'.self::getMode().'.url'),
+            'client_id' => config('siasn-api.sso.'.self::getMode().'.client_id'),
+            'username' => config('siasn-api.sso.'.self::getMode().'.username'),
+            'password' => config('siasn-api.sso.'.self::getMode().'.password'),
+            'grant_type' => config('siasn-api.sso.'.self::getMode().'.grant_type'),
         ];
     }
 
@@ -69,8 +69,8 @@ class SiasnConfig
     public static function getConst(): object
     {
         return (object) [
-            'instansi_id' => config('siasn_api.const.instansi_id'),
-            'satuan_kerja_id' => config('siasn_api.const.satuan_kerja_id'),
+            'instansi_id' => config('siasn-api.const.instansi_id'),
+            'satuan_kerja_id' => config('siasn-api.const.satuan_kerja_id'),
         ];
     }
 
@@ -79,7 +79,7 @@ class SiasnConfig
      */
     public static function getApimTokenAge(): string
     {
-        return config('siasn_api.token_age.apim');
+        return config('siasn-api.token_age.apim');
     }
 
     /**
@@ -87,6 +87,6 @@ class SiasnConfig
      */
     public static function getSsoTokenAge(): string
     {
-        return config('siasn_api.token_age.sso');
+        return config('siasn-api.token_age.sso');
     }
 }

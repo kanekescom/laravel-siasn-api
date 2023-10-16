@@ -6,16 +6,13 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Kanekescom\Siasn\Api\Contracts\Tokenize;
 use Kanekescom\Siasn\Api\Exceptions\InvalidSsoCredentialsException;
-use Kanekescom\Siasn\Api\SiasnConfig;
+use Kanekescom\Siasn\Api\Helpers\Config;
 
 class Sso implements Tokenize
 {
-    /**
-     * Get token from SSO.
-     */
     public static function getToken(): Response
     {
-        $credential = SiasnConfig::getSsoCredential();
+        $credential = Config::getSsoCredential();
 
         if (blank($credential->client_id)) {
             throw new InvalidSsoCredentialsException('client_id must be set');
@@ -30,7 +27,7 @@ class Sso implements Tokenize
         }
 
         return Http::asForm()->withOptions([
-            'debug' => SiasnConfig::getDebug(),
+            'debug' => Config::getDebug(),
         ])->post($credential->url, [
             'grant_type' => $credential->grant_type,
             'client_id' => $credential->client_id,

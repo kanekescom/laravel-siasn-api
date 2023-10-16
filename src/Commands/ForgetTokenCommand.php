@@ -3,8 +3,9 @@
 namespace Kanekescom\Siasn\Api\Commands;
 
 use Illuminate\Console\Command;
+use Kanekescom\Siasn\Api\Credentials\Token;
 
-class ForgetToken extends Command
+class ForgetTokenCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -18,16 +19,17 @@ class ForgetToken extends Command
      *
      * @var string
      */
-    protected $description = 'Delete tokens';
+    protected $description = 'Remove Apim and SSO Token';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        cache()->forget('apim-token');
-        cache()->forget('sso-token');
+        Token::forget();
 
         $this->comment('Tokens has been removed');
+
+        return self::SUCCESS;
     }
 }

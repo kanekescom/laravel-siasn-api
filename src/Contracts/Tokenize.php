@@ -6,8 +6,5 @@ use Illuminate\Http\Client\Response;
 
 interface Tokenize
 {
-    /**
-     * Get token.
-     */
     public static function getToken(): Response;
 }

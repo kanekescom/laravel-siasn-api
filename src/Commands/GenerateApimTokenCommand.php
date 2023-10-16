@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Kanekescom\Siasn\Api\Credentials\Apim;
 use Kanekescom\Siasn\Api\Credentials\Token;
 
-class GenerateApimToken extends Command
+class GenerateApimTokenCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -35,5 +35,7 @@ class GenerateApimToken extends Command
         }
 
         $this->info(json_encode($token, JSON_PRETTY_PRINT));
+
+        return self::SUCCESS;
     }
 }

@@ -5,6 +5,7 @@ namespace Kanekescom\Siasn\Api;
 use Illuminate\Support\Facades\Http;
 use Kanekescom\Helperia\Support\ClassExtender;
 use Kanekescom\Siasn\Api\Credentials\Token;
+use Kanekescom\Siasn\Api\Helpers\Config;
 
 class Siasn extends ClassExtender
 {
@@ -18,7 +19,7 @@ class Siasn extends ClassExtender
 
         $this->class = Http::retry(3, 100)
             ->withOptions([
-                'debug' => SiasnConfig::getDebug(),
+                'debug' => Config::getDebug(),
             ])->withHeaders([
                 'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
             ])->withToken(
