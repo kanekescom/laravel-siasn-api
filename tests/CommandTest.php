@@ -49,5 +49,13 @@ it('can forget token', function () {
 });
 
 it('can get endpoint', function () {
-    $this->artisan('siasn:get', ['endpoint' => env('SIASN_GET_REQUEST_ENDPOINT_TEST')])->assertSuccessful();
+    $this->artisan('siasn:get', ['endpoint' => env('SIASN_GET_REQUEST_ENDPOINT_TEST')])
+        ->expectsQuestion('Write the parameters in JSON form here', '')
+        ->assertSuccessful();
+});
+
+it('can post endpoint', function () {
+    $this->artisan('siasn:post', ['endpoint' => env('SIASN_POST_REQUEST_ENDPOINT_TEST')])
+        ->expectsQuestion('Write the parameters in JSON form here', json_encode(['pns_orang_id' => env('PNS_ORANG_ID')]))
+        ->assertSuccessful();
 });

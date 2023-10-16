@@ -21,7 +21,7 @@ class GenerateApimTokenCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Generate Apim Token';
+    protected $description = 'Generate APIM Token';
 
     /**
      * Execute the console command.

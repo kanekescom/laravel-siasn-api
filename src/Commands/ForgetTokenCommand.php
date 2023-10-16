@@ -19,7 +19,7 @@ class ForgetTokenCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Remove Apim and SSO Token';
+    protected $description = 'Remove APIM and SSO Token';
 
     /**
      * Execute the console command.

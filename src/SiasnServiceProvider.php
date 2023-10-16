@@ -16,7 +16,8 @@ class SiasnServiceProvider extends PackageServiceProvider
             ->hasCommand(Commands\GenerateTokenCommand::class)
             ->hasCommand(Commands\GenerateApimTokenCommand::class)
             ->hasCommand(Commands\GenerateSsoTokenCommand::class)
-            ->hasCommand(Commands\GetRequestEndpointCommand::class);
+            ->hasCommand(Commands\GetRequestEndpointCommand::class)
+            ->hasCommand(Commands\PostRequestEndpointCommand::class);
     }
 
     public function packageRegistered(): void
