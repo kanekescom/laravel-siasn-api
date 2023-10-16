@@ -46,5 +46,7 @@
         <env name="SIASN_CONST_INSTANSI_ID" value=""/>
         <env name="SIASN_CONST_SATUAN_KERJA_ID" value=""/>
         <env name="SIASN_GET_REQUEST_ENDPOINT_TEST" value="https://apimws.bkn.go.id:8243/apisiasn/1.0/referensi/ref-unor"/>
+        <env name="SIASN_POST_REQUEST_ENDPOINT_TEST" value="https://apimws.bkn.go.id:8243/apisiasn/1.0/pns/data-utama-update"/>
+        <env name="PNS_ORANG_ID" value=""/>
     </php>
 </phpunit>

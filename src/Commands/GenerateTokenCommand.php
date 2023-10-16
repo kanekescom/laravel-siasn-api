@@ -22,7 +22,7 @@ class GenerateTokenCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Generate Apim and SSO Token';
+    protected $description = 'Generate APIM and SSO Token';
 
     /**
      * Execute the console command.
