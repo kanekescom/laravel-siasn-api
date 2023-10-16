@@ -3,19 +3,14 @@
 namespace Kanekescom\Siasn\Api\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Kanekescom\Siasn\Api\Siasn as SiasnBuilder;
 
+/**
+ * @see \Kanekescom\Siasn\Api\Siasn
+ */
 class Siasn extends Facade
 {
-    /**
-     * Get the registered name of the component.
-     *
-     * @see \Kanekescom\Siasn\Api\Siasn
-     *
-     * @return string
-     */
     protected static function getFacadeAccessor()
     {
-        return SiasnBuilder::class;
+        return \Kanekescom\Siasn\Api\Siasn::class;
     }
 }

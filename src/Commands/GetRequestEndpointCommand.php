@@ -5,7 +5,7 @@ namespace Kanekescom\Siasn\Api\Commands;
 use Illuminate\Console\Command;
 use Kanekescom\Siasn\Api\Facades\Siasn;
 
-class GetData extends Command
+class GetRequestEndpointCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -20,7 +20,7 @@ class GetData extends Command
      *
      * @var string
      */
-    protected $description = 'Consume API endpoint';
+    protected $description = 'Send Get request to endpoint of SIASN API';
 
     /**
      * Execute the console command.
@@ -28,5 +28,7 @@ class GetData extends Command
     public function handle()
     {
         $this->info(json_encode(Siasn::get($this->argument('endpoint'))->object(), JSON_PRETTY_PRINT));
+
+        return self::SUCCESS;
     }
 }

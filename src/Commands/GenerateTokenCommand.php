@@ -3,17 +3,18 @@
 namespace Kanekescom\Siasn\Api\Commands;
 
 use Illuminate\Console\Command;
+use Kanekescom\Siasn\Api\Credentials\Apim;
 use Kanekescom\Siasn\Api\Credentials\Sso;
 use Kanekescom\Siasn\Api\Credentials\Token;
 
-class GenerateSsoToken extends Command
+class GenerateTokenCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'siasn:sso-token
+    protected $signature = 'siasn:token
                             {--fresh : Always request new token}';
 
     /**
@@ -21,7 +22,7 @@ class GenerateSsoToken extends Command
      *
      * @var string
      */
-    protected $description = 'Generate SSO Token';
+    protected $description = 'Generate Apim and SSO Token';
 
     /**
      * Execute the console command.
@@ -29,11 +30,18 @@ class GenerateSsoToken extends Command
     public function handle()
     {
         if ($this->option('fresh')) {
-            $token = Sso::getToken()->object();
+            $apimToken = Apim::getToken()->object();
+            $ssoToken = Sso::getToken()->object();
         } else {
-            $token = Token::getSsoToken();
+            $apimToken = Token::getApimToken();
+            $ssoToken = Token::getSsoToken();
         }
 
-        $this->info(json_encode($token, JSON_PRETTY_PRINT));
+        $this->info(json_encode([
+            'sso' => $ssoToken,
+            'apim' => $apimToken,
+        ], JSON_PRETTY_PRINT));
+
+        return self::SUCCESS;
     }
 }

@@ -1,68 +1,57 @@
 <?php
 
-namespace Kanekescom\Siasn\Api\Tests;
-
 use Kanekescom\Siasn\Api\Credentials\Apim;
 use Kanekescom\Siasn\Api\Credentials\Sso;
 use Kanekescom\Siasn\Api\Credentials\Token;
 
-class GenerateTokenTest extends TestCase
-{
-    /** @test */
-    public function can_generate_apim_token()
-    {
-        $token = Apim::getToken()->object();
+it('can generate apim token', function () {
+    $apimToken = Apim::getToken()->object();
 
-        $this->assertObjectHasProperty('access_token', $token);
-    }
+    expect($apimToken)->toHaveProperty('access_token');
+});
 
-    /** @test */
-    public function can_generate_apim_token_cache_first()
-    {
-        $token = Token::getApimToken();
+it('can generate sso token', function () {
+    $ssoToken = Sso::getToken()->object();
 
-        $this->assertObjectHasProperty('access_token', $token);
-    }
+    expect($ssoToken)->toHaveProperty('access_token');
+});
 
-    /** @test */
-    public function can_generate_sso_token()
-    {
-        $token = Sso::getToken()->object();
+it('can generate apim token cache first', function () {
+    $apimToken = Token::getApimToken();
 
-        $this->assertObjectHasProperty('access_token', $token);
-    }
+    expect($apimToken)->toHaveProperty('access_token');
+});
 
-    /** @test */
-    public function can_generate_sso_token_cache_first()
-    {
-        $token = Token::getSsoToken();
+it('can generate sso token cache first', function () {
+    $ssoToken = Token::getSsoToken();
 
-        $this->assertObjectHasProperty('access_token', $token);
-    }
+    expect($ssoToken)->toHaveProperty('access_token');
+});
 
-    /** @test */
-    public function can_generate_sso_token_same_on_cache()
-    {
-        $token = Token::getSsoToken();
+it('can generate apim token same on cache', function () {
+    $apimToken = Token::getApimToken();
+    $cachedApimToken = cache('apim-token');
 
-        $this->assertSame($token, cache('sso-token'));
-    }
+    expect($apimToken)->toBe($cachedApimToken);
+});
 
-    /** @test */
-    public function can_generate_apim_token_not_same_on_cache()
-    {
-        $token = Token::getApimToken();
-        $tokenNew = Apim::getToken()->object();
+it('can generate sso token same on cache', function () {
+    $ssoToken = Token::getSsoToken();
+    $cachedSsoToken = cache('sso-token');
 
-        $this->assertNotSame($token, $tokenNew);
-    }
+    expect($ssoToken)->toBe($cachedSsoToken);
+});
 
-    /** @test */
-    public function can_generate_sso_token_not_same_on_cache()
-    {
-        $token = Token::getSsoToken();
-        $tokenNew = Sso::getToken()->object();
+it('can generate apim token not same on cache', function () {
+    $apimTokenObject = Apim::getToken()->object();
+    $apimToken = Token::getApimToken();
 
-        $this->assertNotSame($token, $tokenNew);
-    }
-}
+    expect($apimTokenObject)->not()->toBe($apimToken);
+});
+
+it('can generate sso token not same on cache', function () {
+    $ssoTokenObject = Sso::getToken()->object();
+    $ssoToken = Token::getSsoToken();
+
+    expect($ssoTokenObject)->not()->toBe($ssoToken);
+});

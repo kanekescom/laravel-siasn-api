@@ -1,74 +1,53 @@
 <?php
 
-namespace Kanekescom\Siasn\Api\Tests;
+it('can generate apim token', function () {
+    $this->artisan('siasn:apim-token')->assertSuccessful();
 
-class CommandTest extends TestCase
-{
-    /** @test */
-    public function can_generate_apim_token()
-    {
-        $this->artisan('siasn:apim-token')->assertSuccessful();
+    $this->assertNotEmpty(cache('apim-token'));
+});
 
-        $this->assertNotEmpty(cache('apim-token'));
-    }
+it('can generate sso token', function () {
+    $this->artisan('siasn:sso-token')->assertSuccessful();
 
-    /** @test */
-    public function can_generate_sso_token()
-    {
-        $this->artisan('siasn:sso-token')->assertSuccessful();
+    $this->assertNotEmpty(cache('sso-token'));
+});
 
-        $this->assertNotEmpty(cache('sso-token'));
-    }
+it('can generate apim token fresh', function () {
+    $this->artisan('siasn:apim-token', ['--fresh' => ''])->assertSuccessful();
 
-    /** @test */
-    public function can_generate_apim_token_fresh()
-    {
-        $this->artisan('siasn:apim-token', ['--fresh' => ''])->assertSuccessful();
+    $this->assertNotEmpty(cache('apim-token'));
+});
 
-        $this->assertNotEmpty(cache('apim-token'));
-    }
+it('can generate sso token fresh', function () {
+    $this->artisan('siasn:sso-token', ['--fresh' => ''])->assertSuccessful();
 
-    /** @test */
-    public function can_generate_sso_token_fresh()
-    {
-        $this->artisan('siasn:sso-token', ['--fresh' => ''])->assertSuccessful();
+    $this->assertNotEmpty(cache('sso-token'));
+});
 
-        $this->assertNotEmpty(cache('sso-token'));
-    }
+it('can generate token', function () {
+    $this->artisan('siasn:forget-token')->assertSuccessful();
+    $this->artisan('siasn:token')->assertSuccessful();
 
-    /** @test */
-    public function can_generate_token()
-    {
-        $this->artisan('siasn:forget-token')->assertSuccessful();
-        $this->artisan('siasn:token')->assertSuccessful();
+    $this->assertNotEmpty(cache('apim-token'));
+    $this->assertNotEmpty(cache('sso-token'));
+});
 
-        $this->assertNotEmpty(cache('apim-token'));
-        $this->assertNotEmpty(cache('sso-token'));
-    }
+it('can generate token fresh', function () {
+    $this->artisan('siasn:forget-token')->assertSuccessful();
+    $this->artisan('siasn:token', ['--fresh' => ''])->assertSuccessful();
 
-    /** @test */
-    public function can_generate_token_fresh()
-    {
-        $this->artisan('siasn:forget-token')->assertSuccessful();
-        $this->artisan('siasn:token', ['--fresh' => ''])->assertSuccessful();
+    $this->assertNotEmpty(cache('apim-token'));
+    $this->assertNotEmpty(cache('sso-token'));
+});
 
-        $this->assertNotEmpty(cache('apim-token'));
-        $this->assertNotEmpty(cache('sso-token'));
-    }
+it('can forget token', function () {
+    $this->artisan('siasn:token')->assertSuccessful();
+    $this->artisan('siasn:forget-token')->assertSuccessful();
 
-    /** @test */
-    public function can_forget_token()
-    {
-        $this->artisan('siasn:token')->assertSuccessful();
-        $this->artisan('siasn:forget-token')->assertSuccessful();
+    $this->assertNull(cache('apim-token'));
+    $this->assertNull(cache('sso-token'));
+});
 
-        $this->assertNull(cache('apim-token'));
-        $this->assertNull(cache('sso-token'));
-    }
-
-    /** @test */
-    public function can_get_data()
-    {
-        $this->artisan('siasn:get '.env('SIASN_GET_ENDPOINT_TEST'))->assertSuccessful();
-    }
-}
+it('can get endpoint', function () {
+    $this->artisan('siasn:get', ['endpoint' => env('SIASN_GET_REQUEST_ENDPOINT_TEST')])->assertSuccessful();
+});

@@ -6,16 +6,13 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Kanekescom\Siasn\Api\Contracts\Tokenize;
 use Kanekescom\Siasn\Api\Exceptions\InvalidApimCredentialsException;
-use Kanekescom\Siasn\Api\SiasnConfig;
+use Kanekescom\Siasn\Api\Helpers\Config;
 
 class Apim implements Tokenize
 {
-    /**
-     * Get token from Apim.
-     */
     public static function getToken(): Response
     {
-        $credential = SiasnConfig::getApimCredential();
+        $credential = Config::getApimCredential();
 
         if (blank($credential->username)) {
             throw new InvalidApimCredentialsException('username must be set');
@@ -26,7 +23,7 @@ class Apim implements Tokenize
         }
 
         return Http::withOptions([
-            'debug' => SiasnConfig::getDebug(),
+            'debug' => Config::getDebug(),
         ])->withBasicAuth(
             $credential->username,
             $credential->password
