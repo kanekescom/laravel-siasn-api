@@ -29,7 +29,7 @@ class SiasnServiceProvider extends PackageServiceProvider
 
     protected function registerHttpMacroHelpers(): void
     {
-        if (!method_exists(\Illuminate\Support\Facades\Http::class, 'macro')) { // Lumen
+        if (! method_exists(\Illuminate\Support\Facades\Http::class, 'macro')) { // Lumen
             return;
         }
 
