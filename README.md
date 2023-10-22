@@ -32,8 +32,6 @@ You can publish the config file with:
 php artisan vendor:publish --tag="laravel-siasn-api-config"
 ```
 
-This is the contents of the published config file.
-
 ## Usage
 
 Coming Soon
