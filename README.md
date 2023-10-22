@@ -29,7 +29,7 @@ composer require kanekescom/laravel-siasn-api
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-siasn-api-config"
+php artisan vendor:publish --tag="siasn-api-config"
 ```
 
 ## Usage
