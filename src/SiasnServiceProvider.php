@@ -12,12 +12,14 @@ class SiasnServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-siasn-api')
             ->hasConfigFile()
-            ->hasCommand(Commands\ForgetTokenCommand::class)
-            ->hasCommand(Commands\GenerateTokenCommand::class)
-            ->hasCommand(Commands\GenerateApimTokenCommand::class)
-            ->hasCommand(Commands\GenerateSsoTokenCommand::class)
-            ->hasCommand(Commands\GetRequestEndpointCommand::class)
-            ->hasCommand(Commands\PostRequestEndpointCommand::class);
+            ->hasCommands([
+                Commands\ForgetTokenCommand::class,
+                Commands\GenerateTokenCommand::class,
+                Commands\GenerateApimTokenCommand::class,
+                Commands\GenerateSsoTokenCommand::class,
+                Commands\GetRequestEndpointCommand::class,
+                Commands\PostRequestEndpointCommand::class,
+            ]);
     }
 
     public function packageRegistered(): void
