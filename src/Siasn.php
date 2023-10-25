@@ -18,6 +18,7 @@ class Siasn extends ClassExtender
         $ssoToken = Token::getSsoToken();
 
         $this->class = Http::retry(3, 100)
+            ->timeout(10)
             ->withOptions([
                 'debug' => Config::getDebug(),
             ])->withHeaders([
