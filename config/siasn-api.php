@@ -93,7 +93,7 @@ return [
     | Token Age
     |--------------------------------------------------------------------------
     |
-    | This options is for storing the token age cache.
+    | This option is to cache token ages in seconds.
     |
     */
 
@@ -107,7 +107,7 @@ return [
     | Timeout
     |--------------------------------------------------------------------------
     |
-    | Timeout for get response.
+    | This option determine the time limit for getting a response in seconds
     |
     */
 
