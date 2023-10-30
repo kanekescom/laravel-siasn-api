@@ -9,22 +9,25 @@ use Kanekescom\Siasn\Api\Helpers\Config;
 
 class Siasn extends ClassExtender
 {
-    /**
-     * Create a new instance.
-     */
     public function __construct()
     {
         $apimToken = Token::getApimToken();
-        $ssoToken = Token::getSsoToken();
 
         $this->class = Http::retry(3, 100)
-            ->timeout(10)
+            ->timeout(config('siasn-api.timeout'))
             ->withOptions([
                 'debug' => Config::getDebug(),
-            ])->withHeaders([
-                'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
             ])->withToken(
                 $apimToken->access_token
             );
+    }
+
+    public function withSso()
+    {
+        $ssoToken = Token::getSsoToken();
+
+        return $this->class->withHeaders([
+            'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
+        ]);
     }
 }
