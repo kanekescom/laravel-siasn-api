@@ -14,7 +14,7 @@ class Siasn extends ClassExtender
         $apimToken = Token::getApimToken();
 
         $this->class = Http::retry(3, 100)
-            ->timeout(10)
+            ->timeout(config('siasn-api.timeout'))
             ->withOptions([
                 'debug' => Config::getDebug(),
             ])->withToken(
