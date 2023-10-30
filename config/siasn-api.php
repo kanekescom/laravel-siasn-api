@@ -111,6 +111,6 @@ return [
     |
     */
 
-    'timeout' => 10,
+    'timeout' => env('SIASN_TIMEOUT', 30),
 
 ];
