@@ -30,7 +30,7 @@ class PostRequestEndpointCommand extends Command
         $endpoint = $this->argument('endpoint');
         $params = json_decode($this->ask('Write the parameters in JSON form here'), true);
 
-        $this->info(json_encode(Siasn::post($endpoint, $params)->object(), JSON_PRETTY_PRINT));
+        $this->info(json_encode(Siasn::withSso()->post($endpoint, $params)->object(), JSON_PRETTY_PRINT));
 
         return self::SUCCESS;
     }
