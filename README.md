@@ -34,7 +34,41 @@ php artisan vendor:publish --tag="siasn-api-config"
 
 ## Usage
 
-Coming Soon
+Get APIM Token
+
+```bash
+php artisan siasn:apim-token
+```
+
+Forget APIM Token
+
+```bash
+php artisan siasn:forget-token
+```
+
+Get data from endpoint
+
+```bash
+php artisan siasn:get
+```
+
+Post data to endpoint
+
+```bash
+php artisan siasn:post
+```
+
+Get SSO Token
+
+```bash
+php artisan siasn:sso-token
+```
+
+Forget SSO Token
+
+```bash
+php artisan siasn:token
+```
 
 ## Testing
 
