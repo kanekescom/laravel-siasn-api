@@ -28,6 +28,7 @@ class Sso implements Tokenize
 
         return Http::asForm()->withOptions([
             'debug' => Config::getDebug(),
+            'verify' => Config::getHttpVerify(),
         ])->post($credential->url, [
             'grant_type' => $credential->grant_type,
             'client_id' => $credential->client_id,
