@@ -28,6 +28,19 @@ return [
     |
     */
 
+    'http_verify' => (bool) env('SIASN_HTTP_VERIFY', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Debug Mode
+    |--------------------------------------------------------------------------
+    |
+    | When in debug mode, detailed error messages with stack traces will be
+    | shown on every error that occurs within your application. If disabled,
+    | a simple generic error page is shown.
+    |
+    */
+
     'debug' => (bool) env('SIASN_DEBUG', env('APP_DEBUG')),
 
     /*

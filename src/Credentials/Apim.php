@@ -24,6 +24,7 @@ class Apim implements Tokenize
 
         return Http::withOptions([
             'debug' => Config::getDebug(),
+            'verify' => Config::getHttpVerify(),
         ])->withBasicAuth(
             $credential->username,
             $credential->password

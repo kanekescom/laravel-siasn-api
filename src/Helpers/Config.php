@@ -29,11 +29,19 @@ class Config
     }
 
     /**
-     * Get mode.
+     * Get debug.
      */
     public static function getDebug(): bool
     {
         return config('siasn-api.debug');
+    }
+
+    /**
+     * Get http verify.
+     */
+    public static function getHttpVerify(): bool
+    {
+        return config('siasn-api.http_verify');
     }
 
     /**
