@@ -50,10 +50,10 @@ class Config
     public static function getApimCredential(): object
     {
         return (object) [
-            'url' => config('siasn-api.apim.' . self::getMode() . '.url'),
-            'username' => config('siasn-api.apim.' . self::getMode() . '.username'),
-            'password' => config('siasn-api.apim.' . self::getMode() . '.password'),
-            'grant_type' => config('siasn-api.apim.' . self::getMode() . '.grant_type'),
+            'url' => config('siasn-api.apim.'.self::getMode().'.url'),
+            'username' => config('siasn-api.apim.'.self::getMode().'.username'),
+            'password' => config('siasn-api.apim.'.self::getMode().'.password'),
+            'grant_type' => config('siasn-api.apim.'.self::getMode().'.grant_type'),
         ];
     }
 
@@ -63,11 +63,11 @@ class Config
     public static function getSsoCredential(): object
     {
         return (object) [
-            'url' => config('siasn-api.sso.' . self::getMode() . '.url'),
-            'client_id' => config('siasn-api.sso.' . self::getMode() . '.client_id'),
-            'username' => config('siasn-api.sso.' . self::getMode() . '.username'),
-            'password' => config('siasn-api.sso.' . self::getMode() . '.password'),
-            'grant_type' => config('siasn-api.sso.' . self::getMode() . '.grant_type'),
+            'url' => config('siasn-api.sso.'.self::getMode().'.url'),
+            'client_id' => config('siasn-api.sso.'.self::getMode().'.client_id'),
+            'username' => config('siasn-api.sso.'.self::getMode().'.username'),
+            'password' => config('siasn-api.sso.'.self::getMode().'.password'),
+            'grant_type' => config('siasn-api.sso.'.self::getMode().'.grant_type'),
         ];
     }
 
