@@ -17,7 +17,7 @@ class Siasn extends ClassExtender
             ->timeout(config('siasn-api.timeout'))
             ->withOptions([
                 'debug' => Config::getDebug(),
-                'verify' => false,
+                'verify' => Config::getHttpVerify(),
             ])->withToken(
                 $apimToken->access_token
             );
