@@ -29,7 +29,7 @@ class Siasn extends ClassExtender
             })
             ->withOptions([
                 'debug' => Config::getDebug(),
-                'verify' => Config::getHttpVerify(),
+                'verify' => Config::getEnableSslVerification(),
             ])
             ->withToken(Token::getApimToken()->access_token);
     }

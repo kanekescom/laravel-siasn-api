@@ -39,9 +39,9 @@ class Config
     /**
      * Get http verify.
      */
-    public static function getHttpVerify(): bool
+    public static function getEnableSslVerification(): bool
     {
-        return config('siasn-api.http_verify');
+        return config('siasn-api.enable_ssl_verification');
     }
 
     /**

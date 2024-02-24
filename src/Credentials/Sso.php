@@ -31,7 +31,7 @@ class Sso implements Tokenize
             ->retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'))
             ->withOptions([
                 'debug' => Config::getDebug(),
-                'verify' => Config::getHttpVerify(),
+                'verify' => Config::getEnableSslVerification(),
             ])
             ->post($credential->url, [
                 'grant_type' => $credential->grant_type,
