@@ -26,14 +26,18 @@ class Sso implements Tokenize
             throw new InvalidSsoCredentialsException('password must be set');
         }
 
-        return Http::asForm()->withOptions([
-            'debug' => Config::getDebug(),
-            'verify' => Config::getHttpVerify(),
-        ])->post($credential->url, [
-            'grant_type' => $credential->grant_type,
-            'client_id' => $credential->client_id,
-            'username' => $credential->username,
-            'password' => $credential->password,
-        ]);
+        return Http::timeout(config('siasn-api.request_timeout'))
+            ->asForm()
+            ->retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'))
+            ->withOptions([
+                'debug' => Config::getDebug(),
+                'verify' => Config::getHttpVerify(),
+            ])
+            ->post($credential->url, [
+                'grant_type' => $credential->grant_type,
+                'client_id' => $credential->client_id,
+                'username' => $credential->username,
+                'password' => $credential->password,
+            ]);
     }
 }

@@ -22,14 +22,16 @@ class Apim implements Tokenize
             throw new InvalidApimCredentialsException('password must be set');
         }
 
-        return Http::withOptions([
-            'debug' => Config::getDebug(),
-            'verify' => Config::getHttpVerify(),
-        ])->withBasicAuth(
-            $credential->username,
-            $credential->password
-        )->post($credential->url, [
-            'grant_type' => $credential->grant_type,
-        ]);
+        return Http::timeout(config('siasn-api.request_timeout'))
+            ->retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'))
+            ->withOptions([
+                'debug' => Config::getDebug(),
+                'verify' => Config::getHttpVerify(),
+            ])->withBasicAuth(
+                $credential->username,
+                $credential->password
+            )->post($credential->url, [
+                'grant_type' => $credential->grant_type,
+            ]);
     }
 }

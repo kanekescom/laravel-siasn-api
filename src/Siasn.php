@@ -14,15 +14,16 @@ class Siasn extends ClassExtender
 {
     public function __construct()
     {
-        $this->class = Http::timeout(config('siasn-api.timeout'))
-            ->retry(2, 0, function (Exception $exception, PendingRequest $request) {
+        $this->class = Http::timeout(config('siasn-api.request_timeout'))
+            ->retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'), function (Exception $exception, PendingRequest $request) {
                 if (! $exception instanceof RequestException || $exception->response->status() !== 401) {
                     return false;
                 }
 
                 Token::forget();
 
-                $request->withToken(Token::getApimToken()->access_token);
+                $request
+                    ->withToken(Token::getApimToken()->access_token);
 
                 return true;
             })
@@ -37,23 +38,25 @@ class Siasn extends ClassExtender
     {
         $ssoToken = Token::getSsoToken();
 
-        return $this->class->withHeaders([
-            'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
-        ])->retry(2, 0, function (Exception $exception, PendingRequest $request) {
-            if (! $exception instanceof RequestException || $exception->response->status() !== 401) {
-                return false;
-            }
+        return $this->class
+            ->retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'), function (Exception $exception, PendingRequest $request) {
+                if (! $exception instanceof RequestException || $exception->response->status() !== 401) {
+                    return false;
+                }
 
-            Token::forget();
-            $ssoToken = Token::getSsoToken();
+                Token::forget();
+                $ssoToken = Token::getSsoToken();
 
-            $request
-                ->withToken(Token::getApimToken()->access_token)
-                ->withHeaders([
-                    'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
-                ]);
+                $request
+                    ->withToken(Token::getApimToken()->access_token)
+                    ->withHeaders([
+                        'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
+                    ]);
 
-            return true;
-        });
+                return true;
+            })
+            ->withHeaders([
+                'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
+            ]);
     }
 }
