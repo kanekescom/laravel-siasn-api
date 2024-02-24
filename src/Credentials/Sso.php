@@ -26,7 +26,8 @@ class Sso implements Tokenize
             throw new InvalidSsoCredentialsException('password must be set');
         }
 
-        return Http::asForm()
+        return Http::timeout(config('siasn-api.request_timeout'))
+            ->asForm()
             ->retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'))
             ->withOptions([
                 'debug' => Config::getDebug(),

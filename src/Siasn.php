@@ -14,7 +14,7 @@ class Siasn extends ClassExtender
 {
     public function __construct()
     {
-        $this->class = Http::timeout(config('siasn-api.timeout'))
+        $this->class = Http::timeout(config('siasn-api.request_timeout'))
             ->retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'), function (Exception $exception, PendingRequest $request) {
                 if (! $exception instanceof RequestException || $exception->response->status() !== 401) {
                     return false;

@@ -56,6 +56,6 @@ return [
 
     'max_request_wait_attempts' => env('SIASN_REQUEST_WAIT_ATTEMPTS', 3),
 
-    'timeout' => env('SIASN_TIMEOUT', 60),
+    'request_timeout' => env('SIASN_TIMEOUT', 60),
 
 ];

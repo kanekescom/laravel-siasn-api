@@ -22,7 +22,8 @@ class Apim implements Tokenize
             throw new InvalidApimCredentialsException('password must be set');
         }
 
-        return Http::retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'))
+        return Http::timeout(config('siasn-api.request_timeout'))
+            ->retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'))
             ->withOptions([
                 'debug' => Config::getDebug(),
                 'verify' => Config::getHttpVerify(),
