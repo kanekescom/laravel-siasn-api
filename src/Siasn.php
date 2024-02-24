@@ -22,7 +22,8 @@ class Siasn extends ClassExtender
 
                 Token::forget();
 
-                $request->withToken(Token::getApimToken()->access_token);
+                $request
+                    ->withToken(Token::getApimToken()->access_token);
 
                 return true;
             })
@@ -37,23 +38,25 @@ class Siasn extends ClassExtender
     {
         $ssoToken = Token::getSsoToken();
 
-        return $this->class->withHeaders([
-            'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
-        ])->retry(2, 0, function (Exception $exception, PendingRequest $request) {
-            if (! $exception instanceof RequestException || $exception->response->status() !== 401) {
-                return false;
-            }
+        return $this->class
+            ->retry(2, 0, function (Exception $exception, PendingRequest $request) {
+                if (! $exception instanceof RequestException || $exception->response->status() !== 401) {
+                    return false;
+                }
 
-            Token::forget();
-            $ssoToken = Token::getSsoToken();
+                Token::forget();
+                $ssoToken = Token::getSsoToken();
 
-            $request
-                ->withToken(Token::getApimToken()->access_token)
-                ->withHeaders([
-                    'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
-                ]);
+                $request
+                    ->withToken(Token::getApimToken()->access_token)
+                    ->withHeaders([
+                        'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
+                    ]);
 
-            return true;
-        });
+                return true;
+            })
+            ->withHeaders([
+                'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
+            ]);
     }
 }
