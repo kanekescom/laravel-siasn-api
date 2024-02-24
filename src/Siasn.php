@@ -15,7 +15,7 @@ class Siasn extends ClassExtender
     public function __construct()
     {
         $this->class = Http::timeout(config('siasn-api.timeout'))
-            ->retry(2, 0, function (Exception $exception, PendingRequest $request) {
+            ->retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'), function (Exception $exception, PendingRequest $request) {
                 if (! $exception instanceof RequestException || $exception->response->status() !== 401) {
                     return false;
                 }
@@ -39,7 +39,7 @@ class Siasn extends ClassExtender
         $ssoToken = Token::getSsoToken();
 
         return $this->class
-            ->retry(2, 0, function (Exception $exception, PendingRequest $request) {
+            ->retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'), function (Exception $exception, PendingRequest $request) {
                 if (! $exception instanceof RequestException || $exception->response->status() !== 401) {
                     return false;
                 }

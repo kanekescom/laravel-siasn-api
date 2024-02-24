@@ -2,56 +2,11 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Mode
-    |--------------------------------------------------------------------------
-    |
-    | This value determines the "mode" your SIASN API is currently running in.
-    | This may determine how you prefer to configure various services the
-    | application utilizes.
-    |
-    | Supported: "training", "production"
-    |
-    */
-
     'mode' => env('SIASN_MODE', 'training'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Debug Mode
-    |--------------------------------------------------------------------------
-    |
-    | When in debug mode, detailed error messages with stack traces will be
-    | shown on every error that occurs within your application. If disabled,
-    | a simple generic error page is shown.
-    |
-    */
 
     'http_verify' => (bool) env('SIASN_HTTP_VERIFY', true),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Debug Mode
-    |--------------------------------------------------------------------------
-    |
-    | When in debug mode, detailed error messages with stack traces will be
-    | shown on every error that occurs within your application. If disabled,
-    | a simple generic error page is shown.
-    |
-    */
-
     'debug' => (bool) env('SIASN_DEBUG', env('APP_DEBUG')),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Credentials
-    |--------------------------------------------------------------------------
-    |
-    | This options is for storing credentials for SIASN API Manager and SIASN
-    | SSO API
-    |
-    */
 
     'apim' => [
         'production' => [
@@ -87,42 +42,19 @@ return [
         ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Constanta
-    |--------------------------------------------------------------------------
-    |
-    | This options is for storing the param for SIASN API.
-    |
-    */
-
     'const' => [
         'instansi_id' => env('SIASN_CONST_INSTANSI_ID'),
         'satuan_kerja_id' => env('SIASN_CONST_SATUAN_KERJA_ID'),
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Token Age
-    |--------------------------------------------------------------------------
-    |
-    | This option is to cache token ages in seconds.
-    |
-    */
 
     'token_age' => [
         'apim' => env('SIASN_APIM_TOKEN_AGE', 3600 - 60),
         'sso' => env('SIASN_SSO_TOKEN_AGE', 43200 - 60),
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Timeout
-    |--------------------------------------------------------------------------
-    |
-    | This option determine the time limit for getting a response in seconds
-    |
-    */
+    'max_request_attempts' => env('SIASN_REQUEST_ATTEMPTS', 3),
+
+    'max_request_wait_attempts' => env('SIASN_REQUEST_WAIT_ATTEMPTS', 3),
 
     'timeout' => env('SIASN_TIMEOUT', 60),
 
