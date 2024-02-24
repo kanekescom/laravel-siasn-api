@@ -47,9 +47,11 @@ class Siasn extends ClassExtender
             Token::forget();
             $ssoToken = Token::getSsoToken();
 
-            $request->withHeaders([
-                'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
-            ]);
+            $request
+                ->withToken(Token::getApimToken()->access_token)
+                ->withHeaders([
+                    'Auth' => "{$ssoToken->token_type} {$ssoToken->access_token}",
+                ]);
 
             return true;
         });
