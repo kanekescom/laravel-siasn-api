@@ -4,10 +4,6 @@ return [
 
     'mode' => env('SIASN_MODE', 'training'),
 
-    'http_verify' => (bool) env('SIASN_HTTP_VERIFY', true),
-
-    'debug' => (bool) env('SIASN_DEBUG', env('APP_DEBUG')),
-
     'apim' => [
         'production' => [
             'url' => 'https://apimws.bkn.go.id/oauth2/token',
@@ -48,14 +44,18 @@ return [
     ],
 
     'token_age' => [
-        'apim' => env('SIASN_APIM_TOKEN_AGE', 3600 - 60),
-        'sso' => env('SIASN_SSO_TOKEN_AGE', 43200 - 60),
+        'apim' => (int) env('SIASN_APIM_TOKEN_AGE', 3600 - 60),
+        'sso' => (int) env('SIASN_SSO_TOKEN_AGE', 43200 - 60),
     ],
 
-    'max_request_attempts' => env('SIASN_REQUEST_ATTEMPTS', 3),
+    'debug' => (bool) env('SIASN_DEBUG', env('APP_DEBUG')),
 
-    'max_request_wait_attempts' => env('SIASN_REQUEST_WAIT_ATTEMPTS', 3),
+    'enable_ssl_verification' => (bool) env('SIASN_ENABLE_SSL_VERIFICATION', true),
 
-    'request_timeout' => env('SIASN_REQUEST_TIMEOUT', 60),
+    'max_request_attempts' => (int) env('SIASN_REQUEST_ATTEMPTS', 3),
+
+    'max_request_wait_attempts' => (int) env('SIASN_REQUEST_WAIT_ATTEMPTS', 30),
+
+    'request_timeout' => (int) env('SIASN_REQUEST_TIMEOUT', 60),
 
 ];

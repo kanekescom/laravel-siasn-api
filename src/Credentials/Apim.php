@@ -26,7 +26,7 @@ class Apim implements Tokenize
             ->retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'))
             ->withOptions([
                 'debug' => Config::getDebug(),
-                'verify' => Config::getHttpVerify(),
+                'verify' => Config::getEnableSslVerification(),
             ])->withBasicAuth(
                 $credential->username,
                 $credential->password
