@@ -18,6 +18,14 @@ Want to provide tangible support? Use the following platform to contribute to op
 
 We highly appreciate you sending us a few cups of coffee to accompany us while writing code. Super thanks.
 
+## Use pro version
+
+We also offer a professional version. We're excited for you to try it out, as it allows us to consistently deliver high-quality software. Don't hesitate to contact us at kanekescom@gmail.com for further information.
+
+- Laravel SIASN Referensi Panel
+- Laravel SIASN SIMPEG Panel
+- SIMPEGDA App
+
 ## Installation
 
 You can install the package via composer:
@@ -80,6 +88,38 @@ php artisan siasn:token
 
 ```bash
 composer test
+```
+
+## Our other cool packages
+
+Need a package for other BKN's Web Service APIs? Consider installing our packages for seamless integration.
+
+### Referensi APIs
+
+- Laravel SIASN Referensi API as API client.
+  
+```bash
+composer require kanekescom/laravel-siasn-referensi-api
+```
+
+- Laravel SIASN Referensi as backend.
+  
+```bash
+composer require kanekescom/laravel-siasn-referensi
+```
+
+### SIASNAPI-SIMPEG APIs
+
+- Laravel SIASN SIMPEG API as API client.
+  
+```bash
+composer require kanekescom/laravel-siasn-simpeg-api
+```
+
+- Laravel SIASN SIMPEG as backend.
+  
+```bash
+composer require kanekescom/laravel-siasn-simpeg
 ```
 
 ## Changelog
