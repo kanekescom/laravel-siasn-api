@@ -19,7 +19,18 @@ class SiasnServiceProvider extends PackageServiceProvider
                 Commands\GenerateSsoTokenCommand::class,
                 Commands\GetRequestEndpointCommand::class,
                 Commands\PostRequestEndpointCommand::class,
-            ]);
+            ])
+            ->hasInstallCommand(function ($command) {
+                $command
+                    ->startWith(function ($command) {
+                        $command->info('Hello, and welcome to my great laravel package!');
+                    })
+                    ->publishConfigFile()
+                    ->askToStarRepoOnGitHub('kanekescom/laravel-siasn-api')
+                    ->endWith(function ($command) {
+                        $command->info('Have a great day!');
+                    });
+            });
     }
 
     public function packageRegistered(): void

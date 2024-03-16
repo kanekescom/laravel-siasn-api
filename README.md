@@ -32,6 +32,12 @@ You can publish the config file with:
 php artisan vendor:publish --tag="siasn-api-config"
 ```
 
+Or, all installations can be completed with the install command:
+
+```bash
+php artisan siasn-api:install
+```
+
 ## Usage
 
 Get APIM Token
