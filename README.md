@@ -96,31 +96,15 @@ Need a package for other BKN's Web Service APIs? Consider installing our package
 
 ### Referensi APIs
 
-- Laravel SIASN Referensi API as API client.
-  
-```bash
-composer require kanekescom/laravel-siasn-referensi-api
-```
+- https://github.com/kanekescom/laravel-siasn-referensi-api as API client
 
-- Laravel SIASN Referensi as backend.
-  
-```bash
-composer require kanekescom/laravel-siasn-referensi
-```
+- https://github.com/kanekescom/laravel-siasn-referensi as backend
 
 ### SIASNAPI-SIMPEG APIs
 
-- Laravel SIASN SIMPEG API as API client.
-  
-```bash
-composer require kanekescom/laravel-siasn-simpeg-api
-```
+- https://github.com/kanekescom/laravel-siasn-simpeg-api as API client
 
-- Laravel SIASN SIMPEG as backend.
-  
-```bash
-composer require kanekescom/laravel-siasn-simpeg
-```
+- https://github.com/kanekescom/laravel-siasn-simpeg as backend
 
 ## Changelog
 
