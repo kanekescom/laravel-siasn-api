@@ -8,25 +8,12 @@ use Kanekescom\Siasn\Api\Credentials\Token;
 
 class GenerateSsoTokenCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'siasn:sso-token
                             {--fresh : Always request new token}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Generate SSO Token';
 
-    /**
-     * Execute the console command.
-     */
-    public function handle()
+    public function handle(): int
     {
         if ($this->option('fresh')) {
             $token = Sso::getToken()->object();
