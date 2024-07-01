@@ -8,25 +8,12 @@ use Kanekescom\Siasn\Api\Credentials\Token;
 
 class GenerateApimTokenCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'siasn:apim-token
                             {--fresh : Always request new token}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Generate APIM Token';
 
-    /**
-     * Execute the console command.
-     */
-    public function handle()
+    public function handle(): int
     {
         if ($this->option('fresh')) {
             $token = Apim::getToken()->object();
