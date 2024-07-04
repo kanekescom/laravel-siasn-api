@@ -55,7 +55,7 @@ it('can get endpoint', function () {
 });
 
 // it('can post endpoint', function () {
-//     $this->artisan('siasn:post', ['endpoint' => env('SIASN_POST_REQUEST_ENDPOINT_TEST')])
-//         ->expectsQuestion('Write the parameters in JSON form here', json_encode(['pns_orang_id' => env('PNS_ORANG_ID')]))
+//     $this->artisan('siasn:post', ['endpoint' => ''])
+//         ->expectsQuestion('Write the parameters in JSON form here', json_encode([]))
 //         ->assertSuccessful();
 // });

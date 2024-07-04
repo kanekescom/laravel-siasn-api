@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.2/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.3/phpunit.xsd"
     backupGlobals="false"
     bootstrap="vendor/autoload.php"
     colors="true"
@@ -45,7 +45,6 @@
         <env name="SIASN_SSO_PASSWORD" value="{{SIASN_SSO_PASSWORD}}"/>
         <env name="SIASN_CONST_INSTANSI_ID" value="{{SIASN_CONST_INSTANSI_ID}}"/>
         <env name="SIASN_CONST_SATUAN_KERJA_ID" value="{{SIASN_CONST_SATUAN_KERJA_ID}}"/>
-        <env name="SIASN_CONST_PNS_ORANG_ID" value="{{SIASN_CONST_PNS_ORANG_ID}}"/>
         <env name="SIASN_GET_REQUEST_ENDPOINT_TEST" value="https://apimws.bkn.go.id:8243/apisiasn/1.0/referensi/ref-unor"/>
     </php>
 </phpunit>
