@@ -59,15 +59,27 @@ jobs:
 
       - name: Add secrets to phpunit.xml
         run: |
-          sed -i 's/{{SIASN_MODE}}/${{ secrets.SIASN_MODE }}/g' phpunit.xml
-          sed -i 's/{{SIASN_APIM_USERNAME}}/${{ secrets.SIASN_APIM_USERNAME }}/g' phpunit.xml
-          sed -i 's/{{SIASN_APIM_PASSWORD}}/${{ secrets.SIASN_APIM_PASSWORD }}/g' phpunit.xml
-          sed -i 's/{{SIASN_SSO_CLIENT_ID}}/${{ secrets.SIASN_SSO_CLIENT_ID }}/g' phpunit.xml
-          sed -i 's/{{SIASN_SSO_USERNAME}}/${{ secrets.SIASN_SSO_USERNAME }}/g' phpunit.xml
-          sed -i 's/{{SIASN_SSO_PASSWORD}}/${{ secrets.SIASN_SSO_PASSWORD }}/g' phpunit.xml
-          sed -i 's/{{SIASN_CONST_INSTANSI_ID}}/${{ secrets.SIASN_CONST_INSTANSI_ID }}/g' phpunit.xml
-          sed -i 's/{{SIASN_CONST_SATUAN_KERJA_ID}}/${{ secrets.SIASN_CONST_SATUAN_KERJA_ID }}/g' phpunit.xml
-          sed -i 's/{{SIASN_CONST_PNS_ORANG_ID}}/${{ secrets.SIASN_CONST_PNS_ORANG_ID }}/g' phpunit.xml
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            sed `-i 's/{{SIASN_MODE}}/${{ secrets.SIASN_MODE }}/g' phpunit.xml
+            sed -i 's/{{SIASN_APIM_USERNAME}}/${{ secrets.SIASN_APIM_USERNAME }}/g' phpunit.xml
+            sed -i 's/{{SIASN_APIM_PASSWORD}}/${{ secrets.SIASN_APIM_PASSWORD }}/g' phpunit.xml
+            sed -i 's/{{SIASN_SSO_CLIENT_ID}}/${{ secrets.SIASN_SSO_CLIENT_ID }}/g' phpunit.xml
+            sed -i 's/{{SIASN_SSO_USERNAME}}/${{ secrets.SIASN_SSO_USERNAME }}/g' phpunit.xml
+            sed -i 's/{{SIASN_SSO_PASSWORD}}/${{ secrets.SIASN_SSO_PASSWORD }}/g' phpunit.xml
+            sed -i 's/{{SIASN_CONST_INSTANSI_ID}}/${{ secrets.SIASN_CONST_INSTANSI_ID }}/g' phpunit.xml
+            sed -i 's/{{SIASN_CONST_SATUAN_KERJA_ID}}/${{ secrets.SIASN_CONST_SATUAN_KERJA_ID }}/g' phpunit.xml
+            sed -i '`s/{{SIASN_CONST_PNS_ORANG_ID}}/${{ secrets.SIASN_CONST_PNS_ORANG_ID }}/g' phpunit.xml
+          else
+            sed -i 's@{{SIASN_MODE}}@${{ secrets.SIASN_MODE }}@g' phpunit.xml
+            sed -i 's@{{SIASN_APIM_USERNAME}}@${{ secrets.SIASN_APIM_USERNAME }}@g' phpunit.xml
+            sed -i 's@{{SIASN_APIM_PASSWORD}}@${{ secrets.SIASN_APIM_PASSWORD }}@g' phpunit.xml
+            sed -i 's@{{SIASN_SSO_CLIENT_ID}}@${{ secrets.SIASN_SSO_CLIENT_ID }}@g' phpunit.xml
+            sed -i 's@{{SIASN_SSO_USERNAME}}@${{ secrets.SIASN_SSO_USERNAME }}@g' phpunit.xml
+            sed -i 's@{{SIASN_SSO_PASSWORD}}@${{ secrets.SIASN_SSO_PASSWORD }}@g' phpunit.xml
+            sed -i 's@{{SIASN_CONST_INSTANSI_ID}}@${{ secrets.SIASN_CONST_INSTANSI_ID }}@g' phpunit.xml
+            sed -i 's@{{SIASN_CONST_SATUAN_KERJA_ID}}@${{ secrets.SIASN_CONST_SATUAN_KERJA_ID }}@g' phpunit.xml
+            sed -i 's@{{SIASN_CONST_PNS_ORANG_ID}}@${{ secrets.SIASN_CONST_PNS_ORANG_ID }}@g' phpunit.xml
+          fi
 
       - name: Execute tests
         run: vendor/bin/pest --ci
