@@ -62,63 +62,63 @@ jobs:
         with:
           files: 'phpunit.xml'
           find: '{{SIASN_MODE}}'
-          replace: ${{ secrets.SIASN_MODE }}
+          replace: '${{ secrets.SIASN_MODE }}'
 
       - name: Replace SIASN_APIM_USERNAME in phpunit.xml
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           files: 'phpunit.xml'
           find: '{{SIASN_APIM_USERNAME}}'
-          replace: ${{ secrets.SIASN_APIM_USERNAME }}
+          replace: '${{ secrets.SIASN_APIM_USERNAME }}'
 
       - name: Replace SIASN_APIM_PASSWORD in phpunit.xml
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           files: 'phpunit.xml'
           find: '{{SIASN_APIM_PASSWORD}}'
-          replace: ${{ secrets.SIASN_APIM_PASSWORD }}
+          replace: '${{ secrets.SIASN_APIM_PASSWORD }}'
 
       - name: Replace SIASN_SSO_CLIENT_ID in phpunit.xml
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           files: 'phpunit.xml'
           find: '{{SIASN_SSO_CLIENT_ID}}'
-          replace: ${{ secrets.SIASN_SSO_CLIENT_ID }}
+          replace: '${{ secrets.SIASN_SSO_CLIENT_ID }}'
 
       - name: Replace SIASN_SSO_USERNAME in phpunit.xml
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           files: 'phpunit.xml'
           find: '{{SIASN_SSO_USERNAME}}'
-          replace: ${{ secrets.SIASN_SSO_USERNAME }}
+          replace: '${{ secrets.SIASN_SSO_USERNAME }}'
 
       - name: Replace SIASN_SSO_PASSWORD in phpunit.xml
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           files: 'phpunit.xml'
           find: '{{SIASN_SSO_PASSWORD}}'
-          replace: ${{ secrets.SIASN_SSO_PASSWORD }}
+          replace: '${{ secrets.SIASN_SSO_PASSWORD }}'
 
       - name: Replace SIASN_CONST_INSTANSI_ID in phpunit.xml
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           files: 'phpunit.xml'
           find: '{{SIASN_CONST_INSTANSI_ID}}'
-          replace: ${{ secrets.SIASN_CONST_INSTANSI_ID }}
+          replace: '${{ secrets.SIASN_CONST_INSTANSI_ID }}'
 
       - name: Replace SIASN_CONST_SATUAN_KERJA_ID in phpunit.xml
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           files: 'phpunit.xml'
           find: '{{SIASN_CONST_SATUAN_KERJA_ID}}'
-          replace: ${{ secrets.SIASN_CONST_SATUAN_KERJA_ID }}
+          replace: '${{ secrets.SIASN_CONST_SATUAN_KERJA_ID }}'
 
       - name: Replace SIASN_CONST_PNS_ORANG_ID in phpunit.xml
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           files: 'phpunit.xml'
           find: '{{SIASN_CONST_PNS_ORANG_ID}}'
-          replace: ${{ secrets.SIASN_CONST_PNS_ORANG_ID }}
+          replace: '${{ secrets.SIASN_CONST_PNS_ORANG_ID }}'
 
       - name: Execute tests
         run: vendor/bin/pest --ci
