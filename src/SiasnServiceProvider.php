@@ -2,6 +2,7 @@
 
 namespace Kanekescom\Siasn\Api;
 
+use Illuminate\Support\Facades\Http;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -40,11 +41,11 @@ class SiasnServiceProvider extends PackageServiceProvider
 
     protected function registerHttpMacroHelpers(): void
     {
-        if (! method_exists(\Illuminate\Support\Facades\Http::class, 'macro')) { // Lumen
+        if (! method_exists(Http::class, 'macro')) { // Lumen
             return;
         }
 
-        \Illuminate\Support\Facades\Http::macro('siasn', function () {
+        Http::macro('siasn', function () {
             return new Siasn;
         });
     }
