@@ -57,69 +57,16 @@ jobs:
       - name: Copy phpunit.xml.dist to phpunit.xml
         run: cp phpunit.xml.dist phpunit.xml
 
-      - name: Replace SIASN_MODE in phpunit.xml
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          include: 'phpunit.xml'
-          find: '{{SIASN_MODE}}'
-          replace: '${{ secrets.SIASN_MODE }}'
-          regex: false
-
-      - name: Replace SIASN_APIM_USERNAME in phpunit.xml
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          include: 'phpunit.xml'
-          find: '{{SIASN_APIM_USERNAME}}'
-          replace: '${{ secrets.SIASN_APIM_USERNAME }}'
-          regex: false
-
-      - name: Replace SIASN_APIM_PASSWORD in phpunit.xml
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          include: 'phpunit.xml'
-          find: '{{SIASN_APIM_PASSWORD}}'
-          replace: '${{ secrets.SIASN_APIM_PASSWORD }}'
-          regex: false
-
-      - name: Replace SIASN_SSO_CLIENT_ID in phpunit.xml
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          include: 'phpunit.xml'
-          find: '{{SIASN_SSO_CLIENT_ID}}'
-          replace: '${{ secrets.SIASN_SSO_CLIENT_ID }}'
-          regex: false
-
-      - name: Replace SIASN_SSO_USERNAME in phpunit.xml
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          include: 'phpunit.xml'
-          find: '{{SIASN_SSO_USERNAME}}'
-          replace: '${{ secrets.SIASN_SSO_USERNAME }}'
-          regex: false
-
-      - name: Replace SIASN_SSO_PASSWORD in phpunit.xml
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          include: 'phpunit.xml'
-          find: '{{SIASN_SSO_PASSWORD}}'
-          replace: '${{ secrets.SIASN_SSO_PASSWORD }}'
-          regex: false
-
-      - name: Replace SIASN_CONST_INSTANSI_ID in phpunit.xml
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          include: 'phpunit.xml'
-          find: '{{SIASN_CONST_INSTANSI_ID}}'
-          replace: '${{ secrets.SIASN_CONST_INSTANSI_ID }}'
-          regex: false
-
-      - name: Replace SIASN_CONST_SATUAN_KERJA_ID in phpunit.xml
-        uses: jacobtomlinson/gha-find-replace@v3
-        with:
-          include: 'phpunit.xml'
-          find: '{{SIASN_CONST_SATUAN_KERJA_ID}}'
-          replace: '${{ secrets.SIASN_CONST_SATUAN_KERJA_ID }}'
-          regex: false
+      - name: Add secrets to phpunit.xml
+        run: |
+          sed -i 's/{{SIASN_MODE}}/${{ secrets.SIASN_MODE }}/g' phpunit.xml
+          sed -i 's/{{SIASN_APIM_USERNAME}}/${{ secrets.SIASN_APIM_USERNAME }}/g' phpunit.xml
+          sed -i 's/{{SIASN_APIM_PASSWORD}}/${{ secrets.SIASN_APIM_PASSWORD }}/g' phpunit.xml
+          sed -i 's/{{SIASN_SSO_CLIENT_ID}}/${{ secrets.SIASN_SSO_CLIENT_ID }}/g' phpunit.xml
+          sed -i 's/{{SIASN_SSO_USERNAME}}/${{ secrets.SIASN_SSO_USERNAME }}/g' phpunit.xml
+          sed -i 's/{{SIASN_SSO_PASSWORD}}/${{ secrets.SIASN_SSO_PASSWORD }}/g' phpunit.xml
+          sed -i 's/{{SIASN_CONST_INSTANSI_ID}}/${{ secrets.SIASN_CONST_INSTANSI_ID }}/g' phpunit.xml
+          sed -i 's/{{SIASN_CONST_SATUAN_KERJA_ID}}/${{ secrets.SIASN_CONST_SATUAN_KERJA_ID }}/g' phpunit.xml
 
       - name: Execute tests
         run: vendor/bin/pest --ci
