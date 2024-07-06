@@ -2,6 +2,7 @@
 
 return [
 
+    // Supported mode: "production", "training"
     'mode' => env('SIASN_MODE', 'training'),
 
     'apim' => [
