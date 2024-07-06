@@ -85,7 +85,7 @@ class Config
     /**
      * Get mode.
      */
-    public static function getApimTokenAge(): string
+    public static function getApimTokenAge(): ?int
     {
         return config('siasn-api.token_age.apim');
     }
@@ -93,7 +93,7 @@ class Config
     /**
      * Get mode.
      */
-    public static function getSsoTokenAge(): string
+    public static function getSsoTokenAge(): ?int
     {
         return config('siasn-api.token_age.sso');
     }
