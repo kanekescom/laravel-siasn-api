@@ -4,16 +4,13 @@ namespace Kanekescom\Siasn\Api\Helpers;
 
 class Config
 {
-    /**
-     * Get mode.
-     */
     public static function getMode(): string
     {
         return config('siasn-api.mode');
     }
 
     /**
-     * Get is production.
+     * @noinspection PhpUnused
      */
     public static function isProduction(): bool
     {
@@ -21,32 +18,23 @@ class Config
     }
 
     /**
-     * Get is training.
+     * @noinspection PhpUnused
      */
     public static function isTraining(): bool
     {
         return self::getMode() === 'training';
     }
 
-    /**
-     * Get debug.
-     */
     public static function getDebug(): bool
     {
         return config('siasn-api.debug');
     }
 
-    /**
-     * Get http verify.
-     */
     public static function getEnableSslVerification(): bool
     {
         return config('siasn-api.enable_ssl_verification');
     }
 
-    /**
-     * Get Apim configuration.
-     */
     public static function getApimCredential(): object
     {
         return (object) [
@@ -57,9 +45,6 @@ class Config
         ];
     }
 
-    /**
-     * Get SSO configuration.
-     */
     public static function getSsoCredential(): object
     {
         return (object) [
@@ -72,7 +57,7 @@ class Config
     }
 
     /**
-     * Get get const.
+     * @noinspection PhpUnused
      */
     public static function getConst(): object
     {
