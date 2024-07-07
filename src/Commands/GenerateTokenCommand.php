@@ -3,8 +3,6 @@
 namespace Kanekescom\Siasn\Api\Commands;
 
 use Illuminate\Console\Command;
-use Kanekescom\Siasn\Api\Credentials\Apim;
-use Kanekescom\Siasn\Api\Credentials\Sso;
 use Kanekescom\Siasn\Api\Credentials\Token;
 
 class GenerateTokenCommand extends Command
@@ -17,8 +15,8 @@ class GenerateTokenCommand extends Command
     public function handle(): int
     {
         if ($this->option('fresh')) {
-            $apimToken = Apim::getToken()->object();
-            $ssoToken = Sso::getToken()->object();
+            $apimToken = Token::getNewApimToken();
+            $ssoToken = Token::getNewSsoToken();
         } else {
             $apimToken = Token::getApimToken();
             $ssoToken = Token::getSsoToken();

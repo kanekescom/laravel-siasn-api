@@ -8,7 +8,20 @@ use Kanekescom\Siasn\Api\Helpers\Config;
 
 class Token
 {
-    public static function getSsoToken()
+    public static function getApimToken(): object
+    {
+        return cache()->remember('apim-token', Config::getApimTokenAge(), function () {
+            $apimToken = Apim::getToken()->object();
+
+            if (blank(optional($apimToken)->access_token)) {
+                throw new InvalidApimCredentialsException('Invalid Apim user credentials.');
+            }
+
+            return $apimToken;
+        });
+    }
+
+    public static function getSsoToken(): object
     {
         return cache()->remember('sso-token', Config::getSsoTokenAge(), function () {
             $ssoToken = Sso::getToken()->object();
@@ -21,17 +34,18 @@ class Token
         });
     }
 
-    public static function getApimToken()
+    public static function getNewApimToken(): object
     {
-        return cache()->remember('apim-token', Config::getApimTokenAge(), function () {
-            $apimToken = Apim::getToken()->object();
+        cache()->forget('apim-token');
 
-            if (blank(optional($apimToken)->access_token)) {
-                throw new InvalidApimCredentialsException('Invalid Apim user credentials.');
-            }
+        return self::getApimToken();
+    }
 
-            return $apimToken;
-        });
+    public static function getNewSsoToken(): object
+    {
+        cache()->forget('sso-token');
+
+        return self::getSsoToken();
     }
 
     public static function forget(): void
