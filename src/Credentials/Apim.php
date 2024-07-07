@@ -3,10 +3,10 @@
 namespace Kanekescom\Siasn\Api\Credentials;
 
 use Illuminate\Http\Client\ConnectionException;
-use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Kanekescom\Siasn\Api\Contracts\Tokenize;
 use Kanekescom\Siasn\Api\Exceptions\InvalidApimCredentialsException;
+use Kanekescom\Siasn\Api\Exceptions\InvalidTokenException;
 use Kanekescom\Siasn\Api\Helpers\Config;
 
 class Apim implements Tokenize
@@ -14,7 +14,7 @@ class Apim implements Tokenize
     /**
      * @throws InvalidApimCredentialsException|ConnectionException
      */
-    public static function getToken(): Response
+    public static function getToken(): object
     {
         $credential = Config::getApimCredential();
 
@@ -26,7 +26,7 @@ class Apim implements Tokenize
             throw new InvalidApimCredentialsException('password must be set');
         }
 
-        return Http::timeout(config('siasn-api.request_timeout'))
+        $response = Http::timeout(config('siasn-api.request_timeout'))
             ->retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'))
             ->withOptions([
                 'debug' => Config::getDebug(),
@@ -37,5 +37,13 @@ class Apim implements Tokenize
             )->post($credential->url, [
                 'grant_type' => $credential->grant_type,
             ]);
+
+        $token = $response->object();
+
+        if (blank(optional($token)->access_token)) {
+            throw new InvalidTokenException('Not receiving tokens correctly.');
+        }
+
+        return $token;
     }
 }

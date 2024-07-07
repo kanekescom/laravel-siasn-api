@@ -23,8 +23,8 @@ class GenerateTokenCommand extends Command
         }
 
         $this->info(json_encode([
-            'sso' => $ssoToken,
             'apim' => $apimToken,
+            'sso' => $ssoToken,
         ], JSON_PRETTY_PRINT));
 
         return self::SUCCESS;

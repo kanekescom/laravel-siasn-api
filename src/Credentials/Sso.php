@@ -3,10 +3,10 @@
 namespace Kanekescom\Siasn\Api\Credentials;
 
 use Illuminate\Http\Client\ConnectionException;
-use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Kanekescom\Siasn\Api\Contracts\Tokenize;
 use Kanekescom\Siasn\Api\Exceptions\InvalidSsoCredentialsException;
+use Kanekescom\Siasn\Api\Exceptions\InvalidTokenException;
 use Kanekescom\Siasn\Api\Helpers\Config;
 
 class Sso implements Tokenize
@@ -14,7 +14,7 @@ class Sso implements Tokenize
     /**
      * @throws InvalidSsoCredentialsException|ConnectionException
      */
-    public static function getToken(): Response
+    public static function getToken(): object
     {
         $credential = Config::getSsoCredential();
 
@@ -30,7 +30,7 @@ class Sso implements Tokenize
             throw new InvalidSsoCredentialsException('password must be set');
         }
 
-        return Http::timeout(config('siasn-api.request_timeout'))
+        $response = Http::timeout(config('siasn-api.request_timeout'))
             ->asForm()
             ->retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'))
             ->withOptions([
@@ -43,5 +43,13 @@ class Sso implements Tokenize
                 'username' => $credential->username,
                 'password' => $credential->password,
             ]);
+
+        $token = $response->object();
+
+        if (blank(optional($token)->token_type) || blank(optional($token)->access_token)) {
+            throw new InvalidTokenException('Not receiving tokens correctly.');
+        }
+
+        return $token;
     }
 }
