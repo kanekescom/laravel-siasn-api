@@ -12,7 +12,6 @@ use Kanekescom\Siasn\Api\Helpers\Config;
 class Apim implements Tokenize
 {
     /**
-     * @return Response
      * @throws InvalidApimCredentialsException|ConnectionException
      */
     public static function getToken(): Response

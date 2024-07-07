@@ -12,7 +12,6 @@ use Kanekescom\Siasn\Api\Helpers\Config;
 class Sso implements Tokenize
 {
     /**
-     * @return Response
      * @throws InvalidSsoCredentialsException|ConnectionException
      */
     public static function getToken(): Response
