@@ -34,7 +34,7 @@ class Token
         });
     }
 
-    public static function forget()
+    public static function forget(): void
     {
         cache()->forget('apim-token');
         cache()->forget('sso-token');
