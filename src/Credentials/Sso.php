@@ -2,6 +2,7 @@
 
 namespace Kanekescom\Siasn\Api\Credentials;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Kanekescom\Siasn\Api\Contracts\Tokenize;
@@ -10,6 +11,10 @@ use Kanekescom\Siasn\Api\Helpers\Config;
 
 class Sso implements Tokenize
 {
+    /**
+     * @return Response
+     * @throws InvalidSsoCredentialsException|ConnectionException
+     */
     public static function getToken(): Response
     {
         $credential = Config::getSsoCredential();
