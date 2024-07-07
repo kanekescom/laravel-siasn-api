@@ -3,7 +3,6 @@
 namespace Kanekescom\Siasn\Api\Commands;
 
 use Illuminate\Console\Command;
-use Kanekescom\Siasn\Api\Credentials\Sso;
 use Kanekescom\Siasn\Api\Credentials\Token;
 
 class GenerateSsoTokenCommand extends Command
@@ -16,7 +15,7 @@ class GenerateSsoTokenCommand extends Command
     public function handle(): int
     {
         if ($this->option('fresh')) {
-            $token = Sso::getToken()->object();
+            $token = Token::getNewSsoToken();
         } else {
             $token = Token::getSsoToken();
         }
