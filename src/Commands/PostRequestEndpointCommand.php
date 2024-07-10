@@ -8,9 +8,9 @@ use Kanekescom\Siasn\Api\Facades\Siasn;
 class PostRequestEndpointCommand extends Command
 {
     protected $signature = 'siasn:post
-                            {endpoint : POST request to endpoint of SIASN API}';
+                            {endpoint : POST a request to endpoint of SIASN API}';
 
-    protected $description = 'Send POST request to endpoint of SIASN API';
+    protected $description = 'Send a POST request to the endpoint of SIASN API';
 
     public function handle(): int
     {

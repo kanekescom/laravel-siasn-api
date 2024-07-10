@@ -8,9 +8,9 @@ use Kanekescom\Siasn\Api\Credentials\Token;
 class GenerateApimTokenCommand extends Command
 {
     protected $signature = 'siasn:apim-token
-                            {--fresh : Always request new token}';
+                            {--fresh : Always request a new token}';
 
-    protected $description = 'Generate APIM Token';
+    protected $description = 'Generate an APIM Token';
 
     public function handle(): int
     {
