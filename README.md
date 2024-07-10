@@ -166,6 +166,20 @@ Send a POST request to endpoint of SIASN API
 php artisan siasn:post {endpoint}
 ```
 
+### Using Class
+
+The Siasn class uses the Http class (Illuminate\Support\Facades\Http) from Laravel. So you can use it just like you would use that class.
+
+```php
+Siasn::get($endpoint, $params)
+```
+
+We added the `withSso()` method for dual authentication purposes required by BKN. So you just need to add this method if needed, making it like the following.
+
+```php
+Siasn::withSso()->get($endpoint, $params)
+```
+
 ## Testing
 
 ```bash
