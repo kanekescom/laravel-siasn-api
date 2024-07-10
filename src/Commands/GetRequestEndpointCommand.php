@@ -8,9 +8,9 @@ use Kanekescom\Siasn\Api\Facades\Siasn;
 class GetRequestEndpointCommand extends Command
 {
     protected $signature = 'siasn:get
-                            {endpoint : GET request to endpoint of SIASN API}';
+                            {endpoint : GET a request to endpoint of SIASN API}';
 
-    protected $description = 'Send GET request to endpoint of SIASN API';
+    protected $description = 'Send a GET request to the endpoint of SIASN API';
 
     public function handle(): int
     {

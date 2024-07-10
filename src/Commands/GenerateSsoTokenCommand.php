@@ -8,9 +8,9 @@ use Kanekescom\Siasn\Api\Credentials\Token;
 class GenerateSsoTokenCommand extends Command
 {
     protected $signature = 'siasn:sso-token
-                            {--fresh : Always request new token}';
+                            {--fresh : Always request a new token}';
 
-    protected $description = 'Generate SSO Token';
+    protected $description = 'Generate an SSO Token';
 
     public function handle(): int
     {
