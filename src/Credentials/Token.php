@@ -2,10 +2,17 @@
 
 namespace Kanekescom\Siasn\Api\Credentials;
 
+use Kanekescom\Siasn\Api\Exceptions\InvalidApimCredentialsException;
+use Kanekescom\Siasn\Api\Exceptions\InvalidSsoCredentialsException;
+use Kanekescom\Siasn\Api\Exceptions\InvalidTokenException;
 use Kanekescom\Siasn\Api\Helpers\Config;
 
 class Token
 {
+    /**
+     * @throws InvalidTokenException
+     * @throws InvalidApimCredentialsException
+     */
     public static function getApimToken(): object
     {
         return cache()->remember('apim-token', Config::getApimTokenAge(), function () {
@@ -13,6 +20,10 @@ class Token
         });
     }
 
+    /**
+     * @throws InvalidTokenException
+     * @throws InvalidSsoCredentialsException
+     */
     public static function getSsoToken(): object
     {
         return cache()->remember('sso-token', Config::getSsoTokenAge(), function () {
@@ -20,6 +31,10 @@ class Token
         });
     }
 
+    /**
+     * @throws InvalidApimCredentialsException
+     * @throws InvalidTokenException
+     */
     public static function getNewApimToken(): object
     {
         cache()->forget('apim-token');
@@ -27,6 +42,10 @@ class Token
         return self::getApimToken();
     }
 
+    /**
+     * @throws InvalidTokenException
+     * @throws InvalidSsoCredentialsException
+     */
     public static function getNewSsoToken(): object
     {
         cache()->forget('sso-token');

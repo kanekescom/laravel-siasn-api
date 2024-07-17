@@ -2,6 +2,7 @@
 
 namespace Kanekescom\Siasn\Api\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
 use Kanekescom\Siasn\Api\Credentials\Token;
 
@@ -13,10 +14,16 @@ class ForgetTokenCommand extends Command
 
     public function handle(): int
     {
-        Token::forget();
+        try {
+            Token::forget();
 
-        $this->comment('Tokens has been removed');
+            $this->info('Tokens has been removed');
 
-        return self::SUCCESS;
+            return self::SUCCESS;
+        } catch (Exception $e) {
+            $this->error($e->getMessage());
+
+            return self::FAILURE;
+        }
     }
 }
