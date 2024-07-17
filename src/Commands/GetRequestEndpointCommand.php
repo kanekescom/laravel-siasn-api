@@ -2,6 +2,7 @@
 
 namespace Kanekescom\Siasn\Api\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
 use Kanekescom\Siasn\Api\Facades\Siasn;
 
@@ -17,8 +18,16 @@ class GetRequestEndpointCommand extends Command
         $endpoint = $this->argument('endpoint');
         $params = json_decode($this->ask('Write the parameters in JSON form here'), true);
 
-        $this->info(json_encode(Siasn::withSso()->get($endpoint, $params)->object(), JSON_PRETTY_PRINT));
+        try {
+            $response = Siasn::withSso()->get($endpoint, $params);
 
-        return self::SUCCESS;
+            $this->info(json_encode($response->object(), JSON_PRETTY_PRINT));
+
+            return self::SUCCESS;
+        } catch (Exception $e) {
+            $this->error($e->getMessage());
+
+            return self::FAILURE;
+        }
     }
 }
