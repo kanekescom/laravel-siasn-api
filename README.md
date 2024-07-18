@@ -130,7 +130,7 @@ Generate an SSO Token
 php artisan siasn:sso-token
 ```
 
-Generate an APIM and SSO Token
+Generate an APIM and SSO Tokens
 
 ```bash
 php artisan siasn:token
@@ -138,15 +138,30 @@ php artisan siasn:token
 
 You can add the `--fresh` option to always request a new token
 
-### Remove Token
+### Remove Tokens
 
-Remove an APIM and SSO Token
+Remove an APIM and SSO Tokens
 
 ```bash
 php artisan siasn:forget-token
 ```
 
-### Send Request
+### Available Token Methods
+
+Generate an APIM Token
+
+```php
+Token::getNewApimToken(); // Always request a new APIM token
+Token::getApimToken(); // Request a new APIM token
+
+Token::getNewSsoToken(); // Always request a new SSO token
+Token::getSsoToken(); // Request a new SSO token
+
+Token::forget(); // Remove APIM and SSO Tokens
+```
+
+### Send a Request 
+Using Command
 
 Send a GET request to endpoint of SIASN API
 
@@ -166,9 +181,9 @@ Send a POST request to endpoint of SIASN API
 php artisan siasn:post {endpoint}
 ```
 
-### Using Class
+### Send a Request Using Class
 
-The Siasn class uses the Http class (Illuminate\Support\Facades\Http) from Laravel. So you can use it just like you would use that class.
+The Siasn class uses the `Http` class (`Illuminate\Support\Facades\Http`) from Laravel. So you can use it just like you would use that class.
 
 ```php
 Siasn::get($endpoint, $params)
