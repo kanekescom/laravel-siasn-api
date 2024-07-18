@@ -11,7 +11,7 @@ class GenerateTokenCommand extends Command
     protected $signature = 'siasn:token
                             {--fresh : Always request a new token}';
 
-    protected $description = 'Generate an APIM and SSO Token';
+    protected $description = 'Generate an APIM and SSO Tokens';
 
     public function handle(): int
     {
