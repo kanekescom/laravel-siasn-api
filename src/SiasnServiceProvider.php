@@ -1,8 +1,17 @@
 <?php
 
-namespace Kanekescom\Siasn\Api;
+namespace Kanekes\Siasn\Api;
 
 use Illuminate\Support\Facades\Http;
+use Kanekes\Siasn\Api\Commands\Request\GetRequestCommand;
+use Kanekes\Siasn\Api\Commands\Request\PostRequestCommand;
+use Kanekes\Siasn\Api\Commands\Token\ForgetTokenCommand;
+use Kanekes\Siasn\Api\Commands\Token\GenerateApimTokenCommand;
+use Kanekes\Siasn\Api\Commands\Token\GenerateSsoTokenCommand;
+use Kanekes\Siasn\Api\Commands\Token\GenerateTokenCommand;
+use Kanekes\Siasn\Api\Contracts\TokenManager;
+use Kanekes\Siasn\Api\Credentials\Token;
+use Kanekes\Siasn\Api\Services\Config;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -14,12 +23,12 @@ class SiasnServiceProvider extends PackageServiceProvider
             ->name('laravel-siasn-api')
             ->hasConfigFile()
             ->hasCommands([
-                Commands\ForgetTokenCommand::class,
-                Commands\GenerateTokenCommand::class,
-                Commands\GenerateApimTokenCommand::class,
-                Commands\GenerateSsoTokenCommand::class,
-                Commands\GetRequestEndpointCommand::class,
-                Commands\PostRequestEndpointCommand::class,
+                ForgetTokenCommand::class,
+                GenerateTokenCommand::class,
+                GenerateApimTokenCommand::class,
+                GenerateSsoTokenCommand::class,
+                GetRequestCommand::class,
+                PostRequestCommand::class,
             ])
             ->hasInstallCommand(function ($command) {
                 $command
@@ -36,17 +45,33 @@ class SiasnServiceProvider extends PackageServiceProvider
 
     public function packageRegistered(): void
     {
+        $this->app->singleton(Config::class, function () {
+            return new Config;
+        });
+
+        $this->app->singleton(TokenManager::class, function ($app) {
+            return new Token($app->make(Config::class));
+        });
+
+        $this->app->singleton(Siasn::class, function ($app) {
+            return new Siasn;
+        });
+
+        $this->app->bind('siasn.http', function ($app) {
+            return app(Siasn::class);
+        });
+
         $this->registerHttpMacroHelpers();
     }
 
     protected function registerHttpMacroHelpers(): void
     {
-        if (! method_exists(Http::class, 'macro')) { // Lumen
+        if (method_exists(Http::class, 'macroExists') && Http::macroExists('siasn')) {
             return;
         }
 
         Http::macro('siasn', function () {
-            return new Siasn;
+            return app(Siasn::class);
         });
     }
 }

@@ -7,49 +7,55 @@ return [
 
     'apim' => [
         'production' => [
-            'url' => 'https://apimws.bkn.go.id/oauth2/token',
+            'url' => env('SIASN_APIM_URL', 'https://apimws.bkn.go.id/oauth2/token'),
             'grant_type' => 'client_credentials',
             'username' => env('SIASN_APIM_USERNAME'),
             'password' => env('SIASN_APIM_PASSWORD'),
         ],
 
         'training' => [
-            'url' => 'https://training-apimws.bkn.go.id/oauth2/token',
+            'url' => env('SIASN_APIM_URL_TRAINING', 'https://training-apimws.bkn.go.id/oauth2/token'),
             'grant_type' => 'client_credentials',
-            'username' => env('TRAINING_SIASN_APIM_USERNAME'),
-            'password' => env('TRAINING_SIASN_APIM_PASSWORD'),
+            'username' => env('SIASN_APIM_USERNAME_TRAINING', env('SIASN_APIM_USERNAME')),
+            'password' => env('SIASN_APIM_PASSWORD_TRAINING', env('SIASN_APIM_PASSWORD')),
         ],
     ],
 
     'sso' => [
         'production' => [
-            'url' => 'https://sso-siasn.bkn.go.id/auth/realms/public-siasn/protocol/openid-connect/token',
+            'url' => env('SIASN_SSO_URL', 'https://sso-siasn.bkn.go.id/auth/realms/public-siasn/protocol/openid-connect/token'),
             'grant_type' => 'password',
             'client_id' => env('SIASN_SSO_CLIENT_ID'),
             'username' => env('SIASN_SSO_USERNAME'),
             'password' => env('SIASN_SSO_PASSWORD'),
+            'generate' => (bool) env('SIASN_SSO_GENERATE'),
+            'token_type' => env('SIASN_SSO_TOKEN_TYPE', 'Bearer'),
+            'access_token' => env('SIASN_SSO_ACCESS_TOKEN'),
         ],
 
         'training' => [
-            'url' => 'https://iam-siasn.bkn.go.id/auth/realms/public-siasn/protocol/openid-connect/token',
+            'url' => env('SIASN_SSO_URL_TRAINING', 'https://iam-siasn.bkn.go.id/auth/realms/public-siasn/protocol/openid-connect/token'),
             'grant_type' => 'password',
-            'client_id' => env('TRAINING_SIASN_SSO_CLIENT_ID'),
-            'username' => env('TRAINING_SIASN_SSO_USERNAME'),
-            'password' => env('TRAINING_SIASN_SSO_PASSWORD'),
+            'client_id' => env('SIASN_SSO_CLIENT_ID_TRAINING', env('SIASN_SSO_CLIENT_ID')),
+            'username' => env('SIASN_SSO_USERNAME_TRAINING', env('SIASN_SSO_USERNAME')),
+            'password' => env('SIASN_SSO_PASSWORD_TRAINING', env('SIASN_SSO_PASSWORD')),
+            'generate' => (bool) env('SIASN_SSO_GENERATE'),
+            'token_type' => env('SIASN_SSO_TOKEN_TYPE_TRAINING', env('SIASN_SSO_TOKEN_TYPE', 'Bearer')),
+            'access_token' => env('SIASN_SSO_ACCESS_TOKEN_TRAINING', env('SIASN_SSO_ACCESS_TOKEN')),
         ],
     ],
 
-    'const' => [
-        'instansi_id' => env('SIASN_CONST_INSTANSI_ID'),
-        'satuan_kerja_id' => env('SIASN_CONST_SATUAN_KERJA_ID'),
+    'institution' => [
+        'instansi_id' => env('SIASN_INSTITUTION_INSTANSI_ID'),
+        'satuan_kerja_id' => env('SIASN_INSTITUTION_SATUAN_KERJA_ID'),
     ],
 
     'token_age' => [
-        'apim' => (int) env('SIASN_APIM_TOKEN_AGE', 3600 - 60),
-        'sso' => (int) env('SIASN_SSO_TOKEN_AGE', 43200 - 60),
+        'apim' => (int) env('SIASN_APIM_TOKEN_AGE', 3600), // 1 hour
+        'sso' => (int) env('SIASN_SSO_TOKEN_AGE', 43200), // 12 hours
     ],
 
-    'debug' => (bool) env('SIASN_DEBUG', env('APP_DEBUG')),
+    'debug' => (bool) env('SIASN_DEBUG', false),
 
     'enable_ssl_verification' => (bool) env('SIASN_ENABLE_SSL_VERIFICATION', true),
 

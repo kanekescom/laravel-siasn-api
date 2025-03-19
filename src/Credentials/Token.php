@@ -1,61 +1,78 @@
 <?php
 
-namespace Kanekescom\Siasn\Api\Credentials;
+namespace Kanekes\Siasn\Api\Credentials;
 
-use Kanekescom\Siasn\Api\Exceptions\InvalidApimCredentialsException;
-use Kanekescom\Siasn\Api\Exceptions\InvalidSsoCredentialsException;
-use Kanekescom\Siasn\Api\Exceptions\InvalidTokenException;
-use Kanekescom\Siasn\Api\Helpers\Config;
+use Kanekes\Siasn\Api\Contracts\TokenManager;
+use Kanekes\Siasn\Api\Services\Config;
 
-class Token
+class Token implements TokenManager
 {
-    /**
-     * @throws InvalidTokenException
-     * @throws InvalidApimCredentialsException
-     */
-    public static function getApimToken(): object
+    private array $providers;
+
+    public function __construct(private readonly Config $config)
     {
-        return cache()->remember('apim-token', Config::getApimTokenAge(), function () {
-            return Apim::getToken();
+        $this->providers = [
+            'apim' => new Apim($config),
+            'sso' => new Sso($config),
+        ];
+    }
+
+    public function getToken(string $provider): object
+    {
+        $cacheKey = $this->getCacheKey($provider);
+        $tokenAge = $this->getTokenAge($provider);
+
+        return cache()->remember($cacheKey, $tokenAge, function () use ($provider) {
+            return $this->providers[$provider]->getToken();
         });
     }
 
-    /**
-     * @throws InvalidTokenException
-     * @throws InvalidSsoCredentialsException
-     */
-    public static function getSsoToken(): object
+    public function getFreshToken(string $provider): object
     {
-        return cache()->remember('sso-token', Config::getSsoTokenAge(), function () {
-            return Sso::getToken();
-        });
+        $cacheKey = $this->getCacheKey($provider);
+        cache()->forget($cacheKey);
+
+        return $this->getToken($provider);
     }
 
-    /**
-     * @throws InvalidApimCredentialsException
-     * @throws InvalidTokenException
-     */
-    public static function getNewApimToken(): object
+    public function forgetTokens(): void
     {
-        cache()->forget('apim-token');
-
-        return self::getApimToken();
+        foreach (array_keys($this->providers) as $provider) {
+            cache()->forget($this->getCacheKey($provider));
+        }
     }
 
-    /**
-     * @throws InvalidTokenException
-     * @throws InvalidSsoCredentialsException
-     */
-    public static function getNewSsoToken(): object
+    public function getApimToken(): object
     {
-        cache()->forget('sso-token');
-
-        return self::getSsoToken();
+        return $this->getToken('apim');
     }
 
-    public static function forget(): void
+    public function getSsoToken(): object
     {
-        cache()->forget('apim-token');
-        cache()->forget('sso-token');
+        return $this->getToken('sso');
+    }
+
+    public function getNewApimToken(): object
+    {
+        return $this->getFreshToken('apim');
+    }
+
+    public function getNewSsoToken(): object
+    {
+        return $this->getFreshToken('sso');
+    }
+
+    private function getCacheKey(string $provider): string
+    {
+        return $provider.'-token';
+    }
+
+    private function getTokenAge(string $provider): ?int
+    {
+        return match ($provider) {
+            'apim' => $this->config->getApimTokenAge(),
+            'sso' => $this->config->getSsoTokenAge(),
+            default => null,
+        };
     }
 }

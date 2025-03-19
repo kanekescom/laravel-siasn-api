@@ -1,8 +1,8 @@
 <?php
 
-namespace Kanekescom\Siasn\Api\Tests;
+namespace Kanekes\Siasn\Api\Tests;
 
-use Kanekescom\Siasn\Api\SiasnServiceProvider;
+use Kanekes\Siasn\Api\SiasnServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -12,15 +12,15 @@ class TestCase extends Orchestra
         parent::setUp();
     }
 
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             SiasnServiceProvider::class,
         ];
     }
 
-    public function getEnvironmentSetUp($app)
+    public function getEnvironmentSetUp($app): void
     {
-        //
+        $app['config']->set('cache.default', 'array');
     }
 }

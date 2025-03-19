@@ -1,64 +1,72 @@
 <?php
 
-namespace Kanekescom\Siasn\Api\Credentials;
+namespace Kanekes\Siasn\Api\Credentials;
 
 use Exception;
 use Illuminate\Support\Facades\Http;
-use Kanekescom\Siasn\Api\Contracts\Tokenize;
-use Kanekescom\Siasn\Api\Exceptions\InvalidSsoCredentialsException;
-use Kanekescom\Siasn\Api\Exceptions\InvalidTokenException;
-use Kanekescom\Siasn\Api\Helpers\Config;
+use Kanekes\Siasn\Api\Contracts\CredentialProvider;
+use Kanekes\Siasn\Api\Contracts\TokenProvider;
+use Kanekes\Siasn\Api\Exceptions\CredentialException;
+use Kanekes\Siasn\Api\Exceptions\TokenException;
+use Kanekes\Siasn\Api\Services\Config;
 
-class Sso implements Tokenize
+class Sso implements TokenProvider
 {
-    /**
-     * @throws InvalidSsoCredentialsException
-     * @throws InvalidTokenException
-     */
-    public static function getToken(): object
+    private CredentialProvider $credentialProvider;
+
+    public function __construct(private readonly Config $config, ?CredentialProvider $credentialProvider = null)
     {
-        $credential = Config::getSsoCredential();
+        $this->credentialProvider = $credentialProvider ?? new SsoCredentialProvider($config);
+    }
 
-        if (blank($credential->client_id)) {
-            throw new InvalidSsoCredentialsException('SSO client_id must be set');
-        }
-
-        if (blank($credential->username)) {
-            throw new InvalidSsoCredentialsException('SSO username must be set');
-        }
-
-        if (blank($credential->password)) {
-            throw new InvalidSsoCredentialsException('SSO password must be set');
-        }
-
+    public function getToken(): object
+    {
         try {
-            $response = Http::timeout(config('siasn-api.request_timeout'))
-                ->asForm()
-                ->retry(config('siasn-api.max_request_attempts'), config('siasn-api.max_request_wait_attempts'))
-                ->withOptions([
-                    'debug' => Config::getDebug(),
-                    'verify' => Config::getEnableSslVerification(),
-                ])
-                ->post($credential->url, [
-                    'grant_type' => $credential->grant_type,
-                    'client_id' => $credential->client_id,
-                    'username' => $credential->username,
-                    'password' => $credential->password,
-                ]);
+            $credentials = $this->credentialProvider->getCredentials();
+            $this->credentialProvider->validateCredentials($credentials);
 
-            if ($response->failed()) {
-                throw new InvalidTokenException('Error encountered during SSO token generation: '.PHP_EOL.$response->body());
+            if ($credentials->generate) {
+                $response = Http::timeout($this->config->getRequestTimeout())
+                    ->asForm()
+                    ->retry($this->config->getMaxRequestAttempts(), $this->config->getMaxRequestWaitAttempts())
+                    ->withOptions([
+                        'debug' => $this->config->isDebugMode(),
+                        'verify' => $this->config->isSslVerificationEnabled(),
+                    ])
+                    ->post($credentials->url, [
+                        'grant_type' => $credentials->grant_type,
+                        'client_id' => $credentials->client_id,
+                        'username' => $credentials->username,
+                        'password' => $credentials->password,
+                        'token_type' => $credentials->token_type,
+                        'access_token' => $credentials->access_token,
+                    ]);
+
+                if ($response->failed()) {
+                    throw new TokenException('Error encountered during SSO token generation: '.PHP_EOL.$response->body());
+                }
+
+                $token = $response->object();
+            } else {
+                $token = (object) [
+                    'grant_type' => $credentials->grant_type,
+                    'client_id' => $credentials->client_id,
+                    'username' => $credentials->username,
+                    'password' => $credentials->password,
+                    'token_type' => $credentials->token_type,
+                    'access_token' => $credentials->access_token,
+                ];
             }
 
-            $token = $response->object();
-
             if (blank($token?->access_token)) {
-                throw new InvalidTokenException('Unable to receive the SSO token correctly');
+                throw new TokenException('Unable to receive the SSO token correctly');
             }
 
             return $token;
+        } catch (CredentialException $e) {
+            throw $e;
         } catch (Exception $e) {
-            throw new InvalidTokenException('An error occurred while generating the SSO token: '.PHP_EOL.$e->getMessage());
+            throw new TokenException('An error occurred while generating the SSO token: '.PHP_EOL.$e->getMessage());
         }
     }
 }
