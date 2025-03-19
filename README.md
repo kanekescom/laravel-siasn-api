@@ -5,110 +5,42 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/kanekescom/laravel-siasn-api/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/kanekescom/laravel-siasn-api/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/kanekescom/laravel-siasn-api.svg?style=flat-square)](https://packagist.org/packages/kanekescom/laravel-siasn-api)
 
-SIASN REST API Client for Laravel.
-This library is the abstraction of SIASN API for access from applications written with Laravel PHP Framework.
+A Laravel package for seamless integration with the SIASN REST API. This library is the abstraction of SIASN API for access from applications written with Laravel PHP Framework.
 
-## Support us
+## Support Us
 
-Want to provide tangible support? Use the following platform to contribute to open-source software developers. Every contribution you make is a significant boost to continue building and enhancing technology that benefits everyone.
+Want to provide tangible support? Use the following platforms to contribute to open-source software development:
 
-- Buy Me a Coffee https://s.id/hadibmac
-- Patreon https://s.id/hadipatreon
-- Saweria https://s.id/hadisaweria
+- [Buy Me a Coffee](https://s.id/hadibmac)
+- [Patreon](https://s.id/hadipatreon)
+- [Saweria](https://s.id/hadisaweria)
 
-We highly appreciate you sending us a few cups of coffee to accompany us while writing code. Super, thanks.
+Your support is greatly appreciated!
 
-## Use pro version
+## Use Pro Version
 
-We also offer a professional version. We're excited for you to try it out, as it allows us to consistently deliver high-quality software. Feel free to contact us at kanekescom@gmail.com or @achmadhadikurnia (maintainer) for further information.
+We also offer a professional version. Contact us at **kanekescom@gmail.com** or **imachmadhadikurnia@gmail.com** (maintainer) for more details.
 
 - Laravel SIASN Referensi Panel
 - Laravel SIASN SIMPEG Panel
-- SIMPEGDA App
+- SIMASN App (Sistem Informasi ASN)
+- SIMANTEL App (Sistem Informasi Manajemen Talenta)
 
 ## Installation
 
-You can install the package via composer:
+Install the package via Composer:
 
 ```bash
 composer require kanekescom/laravel-siasn-api
 ```
 
-You can publish the config file with:
+Publish the config file:
 
 ```bash
 php artisan vendor:publish --tag="siasn-api-config"
 ```
 
-This is the contents of the published config file:
-
-```php
-// config/siasn-api.php
-<?php
-
-return [
-
-    // Supported mode: "production", "training"
-    'mode' => env('SIASN_MODE', 'training'),
-
-    'apim' => [
-        'production' => [
-            'url' => 'https://apimws.bkn.go.id/oauth2/token',
-            'grant_type' => 'client_credentials',
-            'username' => env('SIASN_APIM_USERNAME'),
-            'password' => env('SIASN_APIM_PASSWORD'),
-        ],
-
-        'training' => [
-            'url' => 'https://training-apimws.bkn.go.id/oauth2/token',
-            'grant_type' => 'client_credentials',
-            'username' => env('TRAINING_SIASN_APIM_USERNAME'),
-            'password' => env('TRAINING_SIASN_APIM_PASSWORD'),
-        ],
-    ],
-
-    'sso' => [
-        'production' => [
-            'url' => 'https://sso-siasn.bkn.go.id/auth/realms/public-siasn/protocol/openid-connect/token',
-            'grant_type' => 'password',
-            'client_id' => env('SIASN_SSO_CLIENT_ID'),
-            'username' => env('SIASN_SSO_USERNAME'),
-            'password' => env('SIASN_SSO_PASSWORD'),
-        ],
-
-        'training' => [
-            'url' => 'https://iam-siasn.bkn.go.id/auth/realms/public-siasn/protocol/openid-connect/token',
-            'grant_type' => 'password',
-            'client_id' => env('TRAINING_SIASN_SSO_CLIENT_ID'),
-            'username' => env('TRAINING_SIASN_SSO_USERNAME'),
-            'password' => env('TRAINING_SIASN_SSO_PASSWORD'),
-        ],
-    ],
-
-    'const' => [
-        'instansi_id' => env('SIASN_CONST_INSTANSI_ID'),
-        'satuan_kerja_id' => env('SIASN_CONST_SATUAN_KERJA_ID'),
-    ],
-
-    'token_age' => [
-        'apim' => (int) env('SIASN_APIM_TOKEN_AGE', 3600 - 60),
-        'sso' => (int) env('SIASN_SSO_TOKEN_AGE', 43200 - 60),
-    ],
-
-    'debug' => (bool) env('SIASN_DEBUG', env('APP_DEBUG')),
-
-    'enable_ssl_verification' => (bool) env('SIASN_ENABLE_SSL_VERIFICATION', true),
-
-    'max_request_attempts' => (int) env('SIASN_REQUEST_ATTEMPTS', 3),
-
-    'max_request_wait_attempts' => (int) env('SIASN_REQUEST_WAIT_ATTEMPTS', 30),
-
-    'request_timeout' => (int) env('SIASN_REQUEST_TIMEOUT', 60),
-
-];
-```
-
-Or, all installations can be completed with the installation command:
+Or complete all installations with:
 
 ```bash
 php artisan siasn-api:install
@@ -118,29 +50,27 @@ php artisan siasn-api:install
 
 ### Token Generator
 
-Generate an APIM Token
+Generate an APIM Token:
 
 ```bash
 php artisan siasn:apim-token
 ```
 
-Generate an SSO Token
+Generate an SSO Token:
 
 ```bash
 php artisan siasn:sso-token
 ```
 
-Generate an APIM and SSO Tokens
+Generate both APIM and SSO Tokens:
 
 ```bash
 php artisan siasn:token
 ```
 
-You can add the `--fresh` option to always request a new token
+Use `--fresh` to always request a new token.
 
 ### Remove Tokens
-
-Remove an APIM and SSO Tokens
 
 ```bash
 php artisan siasn:forget-token
@@ -148,34 +78,31 @@ php artisan siasn:forget-token
 
 ### Available Token Methods
 
-Generate an APIM Token
-
 ```php
 Token::getNewApimToken(); // Always request a new APIM token
-Token::getApimToken(); // Request a new APIM token
+Token::getApimToken(); // Request an APIM token
 
 Token::getNewSsoToken(); // Always request a new SSO token
-Token::getSsoToken(); // Request a new SSO token
+Token::getSsoToken(); // Request an SSO token
 
-Token::forget(); // Remove APIM and SSO Tokens
+Token::forget(); // Remove APIM and SSO tokens
 ```
 
-### Send a Request 
-Using Command
+### Send a Request Using Commands
 
-Send a GET request to endpoint of SIASN API
+#### GET Request:
 
 ```bash
 php artisan siasn:get {endpoint}
 ```
 
-An example to get the referensi unor
+Example:
 
 ```bash
 php artisan siasn:get https://apimws.bkn.go.id:8243/apisiasn/1.0/referensi/ref-unor
 ```
 
-Send a POST request to endpoint of SIASN API
+#### POST Request:
 
 ```bash
 php artisan siasn:post {endpoint}
@@ -183,16 +110,16 @@ php artisan siasn:post {endpoint}
 
 ### Send a Request Using Class
 
-The Siasn class uses the `Http` class (`Illuminate\Support\Facades\Http`) from Laravel. So you can use it just like you would use that class.
+The `Siasn` class uses Laravel's `Http` class (`Illuminate\Support\Facades\Http`):
 
 ```php
-Siasn::get($endpoint, $params)
+Siasn::get($endpoint, $params);
 ```
 
-We added the `withSso()` method for dual authentication purposes required by BKN. So you just need to add this method if needed, making it like the following.
+For dual authentication (SSO), use:
 
 ```php
-Siasn::withSso()->get($endpoint, $params)
+Siasn::withSso()->get($endpoint, $params);
 ```
 
 ## Testing
@@ -201,39 +128,35 @@ Siasn::withSso()->get($endpoint, $params)
 composer test
 ```
 
-## Our other cool packages
-
-Need a package for other BKN's Web Service APIs? Consider installing our packages for seamless integration.
+## Our Other Cool Packages
 
 ### Referensi APIs
 
-- https://github.com/kanekescom/laravel-siasn-referensi-api as API client
-
-- https://github.com/kanekescom/laravel-siasn-referensi as backend
+- [Laravel SIASN Referensi API](https://github.com/kanekescom/laravel-siasn-referensi-api)
+- [Laravel SIASN Referensi Backend](https://github.com/kanekescom/laravel-siasn-referensi)
 
 ### SIASNAPI-SIMPEG APIs
 
-- https://github.com/kanekescom/laravel-siasn-simpeg-api as API client
-
-- https://github.com/kanekescom/laravel-siasn-simpeg as backend
+- [Laravel SIASN SIMPEG API](https://github.com/kanekescom/laravel-siasn-simpeg-api)
+- [Laravel SIASN SIMPEG Backend](https://github.com/kanekescom/laravel-siasn-simpeg)
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+See [CHANGELOG](CHANGELOG.md) for recent updates.
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+See [CONTRIBUTING](CONTRIBUTING.md) for contribution guidelines.
 
 ## Security Vulnerabilities
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+See our [security policy](../../security/policy) on how to report security vulnerabilities.
 
 ## Credits
 
-- [Achmad Hadi Kurnia](https://github.com/kanekescom)
+- [Achmad Hadi Kurnia](https://github.com/achmadhadikurnia)
 - [All Contributors](../../contributors)
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). See [License File](LICENSE.md) for details.

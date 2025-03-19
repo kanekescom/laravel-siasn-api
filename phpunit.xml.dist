@@ -20,13 +20,6 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
-    <coverage>
-        <report>
-            <html outputDirectory="build/coverage"/>
-            <text outputFile="build/coverage.txt"/>
-            <clover outputFile="build/logs/clover.xml"/>
-        </report>
-    </coverage>
     <logging>
         <junit outputFile="build/report.junit.xml"/>
     </logging>
@@ -36,15 +29,19 @@
         </include>
     </source>
     <php>
-        <env name="SIASN_MODE" value="{{SIASN_MODE}}"/>
+        <env name="SIASN_MODE" value="production"/>
         <env name="SIASN_DEBUG" value="false"/>
         <env name="SIASN_APIM_USERNAME" value="{{SIASN_APIM_USERNAME}}"/>
         <env name="SIASN_APIM_PASSWORD" value="{{SIASN_APIM_PASSWORD}}"/>
         <env name="SIASN_SSO_CLIENT_ID" value="{{SIASN_SSO_CLIENT_ID}}"/>
         <env name="SIASN_SSO_USERNAME" value="{{SIASN_SSO_USERNAME}}"/>
         <env name="SIASN_SSO_PASSWORD" value="{{SIASN_SSO_PASSWORD}}"/>
-        <env name="SIASN_CONST_INSTANSI_ID" value="{{SIASN_CONST_INSTANSI_ID}}"/>
-        <env name="SIASN_CONST_SATUAN_KERJA_ID" value="{{SIASN_CONST_SATUAN_KERJA_ID}}"/>
-        <env name="SIASN_GET_REQUEST_ENDPOINT_TEST" value="https://apimws.bkn.go.id:8243/apisiasn/1.0/referensi/ref-unor"/>
+        <env name="SIASN_SSO_ACCESS_TOKEN" value="{{SIASN_SSO_ACCESS_TOKEN}}"/>
+        <env name="SIASN_SSO_GENERATE" value="false"/>
+        <env name="SIASN_INSTITUTION_INSTANSI_ID" value="{{SIASN_INSTITUTION_INSTANSI_ID}}"/>
+        <env name="SIASN_INSTITUTION_SATUAN_KERJA_ID" value="{{SIASN_INSTITUTION_SATUAN_KERJA_ID}}"/>
+        <env name="SIASN_GET_REQUEST_ENDPOINT_TEST" value="https://apimws.bkn.go.id:8243/referensi_siasn/1/agama"/>
+        <env name="SIASN_GET_REQUEST_WISH_SSO_ENDPOINT_TEST"
+             value="https://apimws.bkn.go.id:8243/apisiasn/1.0/referensi/ref-unor"/>
     </php>
 </phpunit>
