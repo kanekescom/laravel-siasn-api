@@ -1,0 +1,62 @@
+name: Qodana Code Quality Scan
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.php'
+      - '**.js'
+      - '**.ts'
+      - '**.jsx'
+      - '**.tsx'
+      - '**.vue'
+      - '**.css'
+      - '**.scss'
+      - '**.html'
+      - '.github/workflows/qodana-code-quality.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '**.php'
+      - '**.js'
+      - '**.ts'
+      - '**.jsx'
+      - '**.tsx'
+      - '**.vue'
+      - '**.css'
+      - '**.scss'
+      - '**.html'
+      - '.github/workflows/qodana-code-quality.yml'
+
+jobs:
+  qodana:
+    name: Static Code Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    permissions:
+      contents: read
+      checks: write
+      security-events: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Qodana Scan
+        uses: JetBrains/qodana-action@v2024.1
+        with:
+          args: --baseline,qodana.sarif.json
+          pr-mode: true
+          push-fixes: pull-request
+        env:
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+
+      - name: Upload SARIF results
+        uses: github/codeql-action/upload-sarif@v2
+        if: always()
+        with:
+          sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
