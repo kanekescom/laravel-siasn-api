@@ -1,4 +1,4 @@
-name: "Update Changelog"
+name: Update Changelog on Release
 
 on:
   release:
@@ -9,7 +9,7 @@ permissions:
   pull-requests: write
 
 jobs:
-  update:
+  update-changelog:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -25,18 +25,15 @@ jobs:
           latest-version: ${{ github.event.release.name }}
           release-notes: ${{ github.event.release.body }}
 
-      - name: Commit updated CHANGELOG
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          branch: update-changelog
-          commit_message: Update CHANGELOG
-          file_pattern: CHANGELOG.md
-
-      - name: Create Pull Request
+      - name: Create pull request
         uses: peter-evans/create-pull-request@v6
         with:
           branch: update-changelog
-          commit-message: Update CHANGELOG
-          title: Update CHANGELOG
-          body: This PR updates the CHANGELOG with the latest release notes.
-          labels: changelog
+          delete-branch: true
+          commit-message: Update CHANGELOG with ${{ github.event.release.name }} release notes
+          title: Update CHANGELOG for ${{ github.event.release.name }}
+          body: |
+            This PR updates the CHANGELOG.md file with the latest release notes from ${{ github.event.release.name }}.
+
+            Release URL: ${{ github.event.release.html_url }}
+          labels: changelog, automated-pr

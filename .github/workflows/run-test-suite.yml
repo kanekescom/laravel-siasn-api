@@ -1,10 +1,17 @@
-name: run-tests
+name: Run Test Suite
 
 on:
   push:
     paths:
       - '**.php'
-      - '.github/workflows/run-tests.yml'
+      - '.github/workflows/run-test-suite.yml'
+      - 'phpunit.xml.dist'
+      - 'composer.json'
+      - 'composer.lock'
+  pull_request:
+    paths:
+      - '**.php'
+      - '.github/workflows/run-test-suite.yml'
       - 'phpunit.xml.dist'
       - 'composer.json'
       - 'composer.lock'
@@ -12,7 +19,7 @@ on:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 5
+    timeout-minutes: 10
     strategy:
       fail-fast: true
       matrix:
@@ -51,22 +58,24 @@ jobs:
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
-      - name: List Installed Dependencies
+      - name: List installed dependencies
         run: composer show -D
 
-      - name: Copy phpunit.xml.dist to phpunit.xml
-        run: cp phpunit.xml.dist phpunit.xml
-
-      - name: Add secrets to phpunit.xml
+      - name: Prepare test environment
         run: |
-          sed -i 's/{{SIASN_APIM_USERNAME}}/${{ secrets.SIASN_APIM_USERNAME }}/g' phpunit.xml
-          sed -i 's/{{SIASN_APIM_PASSWORD}}/${{ secrets.SIASN_APIM_PASSWORD }}/g' phpunit.xml
-          sed -i 's/{{SIASN_SSO_CLIENT_ID}}/${{ secrets.SIASN_SSO_CLIENT_ID }}/g' phpunit.xml
-          sed -i 's/{{SIASN_SSO_USERNAME}}/${{ secrets.SIASN_SSO_USERNAME }}/g' phpunit.xml
-          sed -i 's/{{SIASN_SSO_PASSWORD}}/${{ secrets.SIASN_SSO_PASSWORD }}/g' phpunit.xml
-          sed -i 's/{{SIASN_SSO_ACCESS_TOKEN}}/${{ secrets.SIASN_SSO_ACCESS_TOKEN }}/g' phpunit.xml
-          sed -i 's/{{SIASN_INSTITUTION_INSTANSI_ID}}/${{ secrets.SIASN_INSTITUTION_INSTANSI_ID }}/g' phpunit.xml
-          sed -i 's/{{SIASN_INSTITUTION_SATUAN_KERJA_ID}}/${{ secrets.SIASN_INSTITUTION_SATUAN_KERJA_ID }}/g' phpunit.xml
+          cp phpunit.xml.dist phpunit.xml
+
+      - name: Configure test secrets
+        shell: bash
+        run: |
+          sed -i.bak 's/{{SIASN_APIM_USERNAME}}/${{ secrets.SIASN_APIM_USERNAME }}/g' phpunit.xml
+          sed -i.bak 's/{{SIASN_APIM_PASSWORD}}/${{ secrets.SIASN_APIM_PASSWORD }}/g' phpunit.xml
+          sed -i.bak 's/{{SIASN_SSO_CLIENT_ID}}/${{ secrets.SIASN_SSO_CLIENT_ID }}/g' phpunit.xml
+          sed -i.bak 's/{{SIASN_SSO_USERNAME}}/${{ secrets.SIASN_SSO_USERNAME }}/g' phpunit.xml
+          sed -i.bak 's/{{SIASN_SSO_PASSWORD}}/${{ secrets.SIASN_SSO_PASSWORD }}/g' phpunit.xml
+          sed -i.bak 's/{{SIASN_SSO_ACCESS_TOKEN}}/${{ secrets.SIASN_SSO_ACCESS_TOKEN }}/g' phpunit.xml
+          sed -i.bak 's/{{SIASN_INSTITUTION_INSTANSI_ID}}/${{ secrets.SIASN_INSTITUTION_INSTANSI_ID }}/g' phpunit.xml
+          sed -i.bak 's/{{SIASN_INSTITUTION_SATUAN_KERJA_ID}}/${{ secrets.SIASN_INSTITUTION_SATUAN_KERJA_ID }}/g' phpunit.xml
 
       - name: Execute tests
         run: vendor/bin/pest --ci

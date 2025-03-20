@@ -1,28 +1,42 @@
-name: Fix PHP code style issues
+name: Fix PHP Code Style Issues
 
 on:
   push:
     paths:
       - '**.php'
-
-permissions:
-  contents: write
+      - '.github/workflows/fix-php-code-style.yml'
+      - '.php-cs-fixer.dist.php'
+  pull_request:
+    paths:
+      - '**.php'
+      - '.github/workflows/fix-php-code-style.yml'
+      - '.php-cs-fixer.dist.php'
 
 jobs:
   php-code-styling:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
 
-      - name: Fix PHP code style issues
-        uses: aglipanci/laravel-pint-action@2.5
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          coverage: none
+
+      - name: Install dependencies
+        uses: ramsey/composer-install@v3
+
+      - name: Run PHP CS Fixer
+        run: ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: Fix styling
+          commit_message: Fix PHP code style issues
+          skip_fetch: true
