@@ -4,39 +4,44 @@ on:
   push:
     paths:
       - '**.php'
-      - '.github/workflows/fix-php-code-style.yml'
-      - '.php-cs-fixer.dist.php'
-  pull_request:
-    paths:
-      - '**.php'
-      - '.github/workflows/fix-php-code-style.yml'
-      - '.php-cs-fixer.dist.php'
+
+permissions:
+  contents: write
 
 jobs:
   php-code-styling:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          fetch-depth: 0
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.4'
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
-          coverage: none
+          php-version: '8.2'
 
-      - name: Install dependencies
-        uses: ramsey/composer-install@v3
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.composer/cache
+          key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
 
-      - name: Run PHP CS Fixer
-        run: ./vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php
+      - name: Install Laravel Pint (if not installed)
+        run: composer global require laravel/pint --dev || true
+
+      - name: Fix PHP code style issues
+        run: ~/.composer/vendor/bin/pint --config pint.json --verbose || ~/.composer/vendor/bin/pint --verbose
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: Fix PHP code style issues
-          skip_fetch: true
+          commit_message: "Fix PHP code style issues"
+          file_pattern: '*.php'
+          push_options: --force-with-lease
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"

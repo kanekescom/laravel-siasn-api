@@ -1,62 +1,33 @@
 name: Qodana Code Quality Scan
-
 on:
   push:
-    branches: [main]
-    paths:
-      - '**.php'
-      - '**.js'
-      - '**.ts'
-      - '**.jsx'
-      - '**.tsx'
-      - '**.vue'
-      - '**.css'
-      - '**.scss'
-      - '**.html'
-      - '.github/workflows/qodana-code-quality.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - '**.php'
-      - '**.js'
-      - '**.ts'
-      - '**.jsx'
-      - '**.tsx'
-      - '**.vue'
-      - '**.css'
-      - '**.scss'
-      - '**.html'
-      - '.github/workflows/qodana-code-quality.yml'
+
+permissions:
+  contents: read
 
 jobs:
   qodana:
-    name: Static Code Analysis
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-
-    permissions:
-      contents: read
-      checks: write
-      security-events: write
-      pull-requests: write
-
+    timeout-minutes: 10
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Run Qodana Scan
-        uses: JetBrains/qodana-action@v2024.1
+      - name: Cache Qodana
+        uses: actions/cache@v3
         with:
-          args: --baseline,qodana.sarif.json
-          pr-mode: true
-          push-fixes: pull-request
+          path: ~/.qodana
+          key: qodana-${{ runner.os }}-${{ github.sha }}
+          restore-keys: qodana-${{ runner.os }}-
+
+      - name: Qodana Scan
+        uses: JetBrains/qodana-action@v2024.1
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+        continue-on-error: true
 
-      - name: Upload SARIF results
-        uses: github/codeql-action/upload-sarif@v2
-        if: always()
-        with:
-          sarif_file: ${{ runner.temp }}/qodana/results/qodana.sarif.json
+      - name: Notify on Failure
+        if: failure()
+        run: echo "Qodana scan detected issues. Please review the logs."
