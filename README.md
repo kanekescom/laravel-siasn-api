@@ -24,7 +24,7 @@ We also offer a professional version. Contact us at **kanekescom@gmail.com** or 
 - Laravel SIASN Referensi Panel
 - Laravel SIASN SIMPEG Panel
 - SIMASN App (Sistem Informasi ASN)
-- SIMANTEL App (Sistem Informasi Manajemen Talenta)
+- SIMATA App (Sistem Informasi Manajemen Talenta)
 
 ## Installation
 
