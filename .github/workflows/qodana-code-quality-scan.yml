@@ -23,7 +23,7 @@ jobs:
           restore-keys: qodana-${{ runner.os }}-
 
       - name: Qodana Scan
-        uses: JetBrains/qodana-action@v2024.1
+        uses: JetBrains/qodana-action@latest
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
         continue-on-error: true
