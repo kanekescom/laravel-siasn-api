@@ -9,14 +9,14 @@ use Kanekes\Siasn\Api\Facades\Siasn;
 class GetRequestCommand extends Command
 {
     protected $signature = 'siasn:get
-                            {endpoint : GET a request to endpoint of SIASN API}';
+                            {endpoint : SIASN API endpoint}';
 
-    protected $description = 'Send a GET request to the endpoint of SIASN API';
+    protected $description = 'Send GET request to SIASN API';
 
     public function handle(): int
     {
         $endpoint = $this->argument('endpoint');
-        $params = json_decode($this->ask('Write the parameters in JSON form here'), true, 512, JSON_THROW_ON_ERROR);
+        $params = json_decode($this->ask('Enter JSON parameters (optional)'), true, 512, JSON_THROW_ON_ERROR);
 
         try {
             $response = Siasn::withSso()->get($endpoint, $params);

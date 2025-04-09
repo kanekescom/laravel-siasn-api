@@ -10,7 +10,7 @@ class GenerateSsoTokenCommand extends Command
     protected $signature = 'siasn:sso-token
                             {--fresh : Always request a new token}';
 
-    protected $description = 'Generate an SSO Token';
+    protected $description = 'Generate SSO Token';
 
     public function __construct(private readonly TokenManager $tokenManager)
     {

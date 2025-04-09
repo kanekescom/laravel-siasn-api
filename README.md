@@ -41,13 +41,13 @@ php artisan siasn-api:install
 
 ### Token Generator
 
-Generate an APIM Token:
+Generate APIM Token:
 
 ```bash
 php artisan siasn:apim-token
 ```
 
-Generate an SSO Token:
+Generate SSO Token:
 
 ```bash
 php artisan siasn:sso-token
@@ -73,10 +73,10 @@ php artisan siasn:forget-token
 use Kanekes\Siasn\Api\Credentials\Token;
 
 Token::getNewApimToken(); // Always request a new APIM token
-Token::getApimToken(); // Request an APIM token
+Token::getApimToken(); // Request APIM token
 
 Token::getNewSsoToken(); // Always request a new SSO token
-Token::getSsoToken(); // Request an SSO token
+Token::getSsoToken(); // Request SSO token
 
 Token::forget(); // Remove APIM and SSO tokens
 ```

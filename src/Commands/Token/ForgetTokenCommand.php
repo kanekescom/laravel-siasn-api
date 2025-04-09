@@ -9,7 +9,7 @@ class ForgetTokenCommand extends Command
 {
     protected $signature = 'siasn:forget-token';
 
-    protected $description = 'Remove APIM and SSO Tokens';
+    protected $description = 'Forget APIM and SSO tokens';
 
     public function __construct(private readonly TokenManager $tokenManager)
     {
@@ -21,7 +21,7 @@ class ForgetTokenCommand extends Command
         try {
             $this->tokenManager->forgetTokens();
 
-            $this->info('Tokens have been removed.');
+            $this->info('Tokens forgotten.');
 
             return self::SUCCESS;
         } catch (\Throwable $e) {
