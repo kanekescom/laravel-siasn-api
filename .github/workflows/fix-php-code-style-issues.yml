@@ -1,4 +1,4 @@
-name: Fix PHP Code Style Issues
+name: Fix PHP code style issues
 
 on:
   push:
@@ -17,31 +17,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-
-      - name: Cache Composer dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.composer/cache
-          key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
-          restore-keys: composer-${{ runner.os }}-
-
-      - name: Install Laravel Pint (if not installed)
-        run: composer global require laravel/pint --dev || true
+          ref: ${{ github.head_ref }}
 
       - name: Fix PHP code style issues
-        run: ~/.composer/vendor/bin/pint --config pint.json --verbose || ~/.composer/vendor/bin/pint --verbose
+        uses: aglipanci/laravel-pint-action@2.5
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Fix PHP code style issues"
-          file_pattern: '*.php'
-          push_options: --force-with-lease
-          commit_user_name: "github-actions[bot]"
-          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_message: Fix styling

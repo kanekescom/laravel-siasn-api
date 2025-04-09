@@ -1,25 +1,22 @@
-name: Run Test Suite
+name: run-tests
 
 on:
   push:
     paths:
       - '**.php'
-      - '.github/workflows/run-test-suite.yml'
+      - '.github/workflows/run-tests.yml'
       - 'phpunit.xml.dist'
       - 'composer.json'
       - 'composer.lock'
 
-permissions:
-  contents: read
-
 jobs:
   test:
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 5
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest]
         php: [8.4, 8.3, 8.2]
         laravel: [12.*, 11.*, 10.*]
         stability: [prefer-lowest, prefer-stable]
@@ -36,8 +33,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -46,19 +41,14 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
           coverage: none
 
-      - name: Cache Composer dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.composer/cache
-          key: composer-${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-${{ matrix.stability }}-${{ hashFiles('**/composer.lock') }}
-          restore-keys: composer-${{ runner.os }}-${{ matrix.php }}-${{ matrix.laravel }}-${{ matrix.stability }}-
-
-      - name: Validate Composer dependencies
-        run: composer validate --strict
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "nesbot/carbon:${{ matrix.os == 'windows-latest' && '^^^' || '' }}${{ matrix.carbon }}" --no-interaction --no-update
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: List Installed Dependencies
@@ -75,6 +65,7 @@ jobs:
           SIASN_SSO_CLIENT_ID: ${{ secrets.SIASN_SSO_CLIENT_ID }}
           SIASN_SSO_USERNAME: ${{ secrets.SIASN_SSO_USERNAME }}
           SIASN_SSO_PASSWORD: ${{ secrets.SIASN_SSO_PASSWORD }}
+          SIASN_SSO_ACCESS_TOKEN: ${{ secrets.SIASN_SSO_ACCESS_TOKEN }}
           SIASN_CONST_INSTANSI_ID: ${{ secrets.SIASN_CONST_INSTANSI_ID }}
           SIASN_CONST_SATUAN_KERJA_ID: ${{ secrets.SIASN_CONST_SATUAN_KERJA_ID }}
         run: |
@@ -83,8 +74,3 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/pest --ci
-        continue-on-error: true
-
-      - name: Notify on Failure
-        if: failure()
-        run: echo "Some tests failed. Please check the logs."

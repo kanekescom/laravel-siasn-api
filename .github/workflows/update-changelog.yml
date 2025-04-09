@@ -1,4 +1,4 @@
-name: Update Changelog
+name: "Update Changelog"
 
 on:
   release:
@@ -6,7 +6,6 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   update:
@@ -17,15 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           ref: main
-
-      - name: Ensure CHANGELOG.md exists
-        run: |
-          if [ ! -f CHANGELOG.md ]; then
-            echo "CHANGELOG.md not found. Creating a new one..."
-            echo "# Changelog" > CHANGELOG.md
-          fi
 
       - name: Update Changelog
         uses: stefanzweifel/changelog-updater-action@v1
@@ -36,29 +27,6 @@ jobs:
       - name: Commit updated CHANGELOG
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          branch: update-changelog
-          commit_message: "chore: update CHANGELOG for release ${{ github.event.release.name }}"
+          branch: main
+          commit_message: Update CHANGELOG
           file_pattern: CHANGELOG.md
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
-        with:
-          branch: update-changelog
-          base: main
-          commit-message: "chore: update CHANGELOG for release ${{ github.event.release.name }}"
-          title: "chore: update CHANGELOG for release ${{ github.event.release.name }}"
-          body: |
-            This PR updates the `CHANGELOG.md` with the latest release notes:
-            ```
-            ${{ github.event.release.body }}
-            ```
-          labels: changelog
-          assignees: ${{ github.actor }}
-          reviewers: [ ]
-          draft: false
-
-      - name: Enable Auto-Merge
-        if: success()
-        run: gh pr merge --auto --merge update-changelog
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
