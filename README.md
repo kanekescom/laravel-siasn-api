@@ -17,15 +17,6 @@ Want to provide tangible support? Use the following platforms to contribute to o
 
 Your support is greatly appreciated!
 
-## Use Pro Version
-
-We also offer a professional version. Contact us at **kanekescom@gmail.com** or **imachmadhadikurnia@gmail.com** (maintainer) for more details.
-
-- Laravel SIASN Referensi Panel
-- Laravel SIASN SIMPEG Panel
-- SIMASN App (Sistem Informasi ASN)
-- SIMATA App (Sistem Informasi Manajemen Talenta)
-
 ## Installation
 
 Install the package via Composer:
