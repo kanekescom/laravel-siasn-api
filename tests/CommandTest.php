@@ -48,13 +48,13 @@ it('can forget both APIM and SSO tokens', function () {
     $this->assertNull(cache('sso-token'));
 });
 
-// it('can send a GET request to an endpoint', function () {
-//     $this->artisan('siasn:get', ['endpoint' => env('SIASN_GET_REQUEST_ENDPOINT_TEST')])
-//         ->expectsQuestion('Write the parameters in JSON form here', '')
-//         ->assertSuccessful();
-// });
+it('can successfully send a GET request to the SIASN endpoint', function () {
+    $this->artisan('siasn:get', ['endpoint' => env('SIASN_GET_REQUEST_ENDPOINT_TEST')])
+        ->expectsQuestion('Write the parameters in JSON form here', '')
+        ->assertSuccessful();
+});
 
-// it('can send a POST request to an endpoint', function () {
+// it('can successfully send a POST request to the SIASN endpoint', function () {
 //     $this->artisan('siasn:post', ['endpoint' => ''])
 //         ->expectsQuestion('Write the parameters in JSON form here', json_encode([]))
 //         ->assertSuccessful();
