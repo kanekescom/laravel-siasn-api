@@ -70,6 +70,8 @@ php artisan siasn:forget-token
 ### Available Token Methods
 
 ```php
+use Kanekes\Siasn\Api\Credentials\Token;
+
 Token::getNewApimToken(); // Always request a new APIM token
 Token::getApimToken(); // Request an APIM token
 
@@ -104,12 +106,16 @@ php artisan siasn:post {endpoint}
 The `Siasn` class uses Laravel's `Http` class (`Illuminate\Support\Facades\Http`):
 
 ```php
+use Kanekes\Siasn\Api\Facades\Siasn;
+
 Siasn::get($endpoint, $params);
 ```
 
 For dual authentication (SSO), use:
 
 ```php
+use Kanekes\Siasn\Api\Facades\Siasn;
+
 Siasn::withSso()->get($endpoint, $params);
 ```
 
