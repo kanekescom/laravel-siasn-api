@@ -41,7 +41,7 @@
         <env name="SIASN_INSTITUTION_INSTANSI_ID" value="{{SIASN_INSTITUTION_INSTANSI_ID}}"/>
         <env name="SIASN_INSTITUTION_SATUAN_KERJA_ID" value="{{SIASN_INSTITUTION_SATUAN_KERJA_ID}}"/>
         <env name="SIASN_GET_REQUEST_ENDPOINT_TEST" value="https://apimws.bkn.go.id:8243/referensi_siasn/1/agama"/>
-        <env name="SIASN_GET_REQUEST_WISH_SSO_ENDPOINT_TEST"
+        <env name="SIASN_GET_REQUEST_WITH_SSO_ENDPOINT_TEST"
              value="https://apimws.bkn.go.id:8243/apisiasn/1.0/referensi/ref-unor"/>
     </php>
 </phpunit>
