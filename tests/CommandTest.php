@@ -54,8 +54,11 @@ it('can successfully send a GET request to the SIASN endpoint', function () {
         ->assertSuccessful();
 });
 
-// it('can successfully send a POST request to the SIASN endpoint', function () {
-//     $this->artisan('siasn:post', ['endpoint' => ''])
-//         ->expectsQuestion('Enter JSON parameters (optional)', json_encode([]))
-//         ->assertSuccessful();
-// });
+it('can successfully send a GET request with SSO to the SIASN endpoint', function () {
+    $this->artisan('siasn:get', [
+        'endpoint' => config('siasn-api.tests.get_with_sso_endpoint'),
+        '--with-sso' => true,
+    ])
+        ->expectsQuestion('Enter JSON parameters (optional)', '')
+        ->assertSuccessful();
+});

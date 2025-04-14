@@ -9,7 +9,7 @@ it('can send a GET request to an endpoint', function () {
 });
 
 it('can send a GET request with SSO to an endpoint', function () {
-    $response = Siasn::withSso()->get(config('siasn-api.tests.get_endpoint_with_sso'));
+    $response = Siasn::withSso()->get(config('siasn-api.tests.get_with_sso_endpoint'));
 
     expect($response->successful())->toBeTrue();
 });
