@@ -49,10 +49,7 @@
     "autoload": {
         "psr-4": {
             "Kanekes\\Siasn\\Api\\": "src/"
-        },
-        "files": [
-            "config/siasn-api.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
