@@ -65,4 +65,9 @@ return [
 
     'request_timeout' => (int) env('SIASN_REQUEST_TIMEOUT', 60),
 
+    'tests' => [
+        'get_endpoint' => env('SIASN_TEST_GET_ENDPOINT', 'https://apimws.bkn.go.id:8243/referensi_siasn/1/agama'),
+        'get_with_sso_endpoint' => env('SIASN_TEST_GET_WITH_SSO_ENDPOINT', 'https://apimws.bkn.go.id:8243/apisiasn/1.0/referensi/ref-unor'),
+    ],
+
 ];

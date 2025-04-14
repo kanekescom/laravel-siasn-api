@@ -49,7 +49,7 @@ it('can forget both APIM and SSO tokens', function () {
 });
 
 it('can successfully send a GET request to the SIASN endpoint', function () {
-    $this->artisan('siasn:get', ['endpoint' => env('SIASN_GET_REQUEST_ENDPOINT_TEST')])
+    $this->artisan('siasn:get', ['endpoint' => config('siasn-api.tests.get_endpoint')])
         ->expectsQuestion('Enter JSON parameters (optional)', '')
         ->assertSuccessful();
 });
