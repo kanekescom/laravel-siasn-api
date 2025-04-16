@@ -21,7 +21,7 @@ class Apim implements TokenProvider
 
     public function getToken(): object
     {
-        dd($this->credentialProvider->getCredentials()->username);
+        var_dump($this->credentialProvider->getCredentials()->username);
         try {
             $credentials = $this->credentialProvider->getCredentials();
             $this->credentialProvider->validateCredentials($credentials);
