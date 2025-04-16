@@ -21,6 +21,7 @@ class Apim implements TokenProvider
 
     public function getToken(): object
     {
+        dd($this->credentialProvider->getCredentials()->username);
         try {
             $credentials = $this->credentialProvider->getCredentials();
             $this->credentialProvider->validateCredentials($credentials);
@@ -41,7 +42,6 @@ class Apim implements TokenProvider
             }
 
             $token = $response->object();
-            dd($token);
 
             if (blank($token?->access_token)) {
                 throw new TokenException('Unable to receive the APIM token correctly');
