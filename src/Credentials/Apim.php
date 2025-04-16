@@ -50,8 +50,7 @@ class Apim implements TokenProvider
         } catch (CredentialException $e) {
             throw $e;
         } catch (Exception $e) {
-            throw new TokenException('An error occurred while generating the APIM token: '
-                .$this->credentialProvider->getCredentials()->username);
+            throw new TokenException('An error occurred while generating the APIM token: '.PHP_EOL.$e->getMessage());
         }
     }
 }
