@@ -1,5 +1,0 @@
-parameters:
-    ignoreErrors:
-        - message: "#Called 'env' outside of the config directory#"
-          paths:
-              - config/siasn-api.php
