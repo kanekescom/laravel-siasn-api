@@ -58,11 +58,11 @@ jobs:
       - name: Replace placeholders in phpunit.xml with GitHub Secrets
         run: |
           sed -i "s|{{SIASN_APIM_USERNAME}}|${{ secrets.SIASN_APIM_USERNAME }}|g" phpunit.xml
-          sed -i "s|{{SIASN_APIM_USERNAME}}|${{ secrets.SIASN_APIM_PASSWORD }}|g" phpunit.xml
-          sed -i "s|{{SIASN_APIM_USERNAME}}|${{ secrets.SIASN_SSO_CLIENT_ID }}|g" phpunit.xml
-          sed -i "s|{{SIASN_APIM_USERNAME}}|${{ secrets.SIASN_SSO_USERNAME }}|g" phpunit.xml
-          sed -i "s|{{SIASN_APIM_USERNAME}}|${{ secrets.SIASN_SSO_PASSWORD }}|g" phpunit.xml
-          sed -i "s|{{SIASN_APIM_USERNAME}}|${{ secrets.SIASN_SSO_ACCESS_TOKEN }}|g" phpunit.xml
+          sed -i "s|{{SIASN_APIM_PASSWORD}}|${{ secrets.SIASN_APIM_PASSWORD }}|g" phpunit.xml
+          sed -i "s|{{SIASN_SSO_CLIENT_ID}}|${{ secrets.SIASN_SSO_CLIENT_ID }}|g" phpunit.xml
+          sed -i "s|{{SIASN_SSO_USERNAME}}|${{ secrets.SIASN_SSO_USERNAME }}|g" phpunit.xml
+          sed -i "s|{{SIASN_SSO_PASSWORD}}|${{ secrets.SIASN_SSO_PASSWORD }}|g" phpunit.xml
+          sed -i "s|{{SIASN_SSO_ACCESS_TOKEN}}|${{ secrets.SIASN_SSO_ACCESS_TOKEN }}|g" phpunit.xml
         shell: bash
 
       - name: Set environment variables for PHPUnit
