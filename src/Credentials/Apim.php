@@ -37,7 +37,7 @@ class Apim implements TokenProvider
                 ]);
 
             if ($response->failed()) {
-                throw new TokenException('Error encountered during APIM token generation: '.PHP_EOL.env('SIASN_APIM_USERNAME'));
+                throw new TokenException('Error encountered during APIM token generation: '.PHP_EOL.$response->body());
             }
 
             $token = $response->object();
@@ -50,7 +50,7 @@ class Apim implements TokenProvider
         } catch (CredentialException $e) {
             throw $e;
         } catch (Exception $e) {
-            throw new TokenException('An error occurred while generating the APIM token: '.PHP_EOL.$e->getMessage());
+            throw new TokenException('An error occurred while generating the APIM token: '.env('SIASN_APIM_USERNAME'));
         }
     }
 }
