@@ -41,6 +41,7 @@ class Apim implements TokenProvider
             }
 
             $token = $response->object();
+            dd($token);
 
             if (blank($token?->access_token)) {
                 throw new TokenException('Unable to receive the APIM token correctly');
