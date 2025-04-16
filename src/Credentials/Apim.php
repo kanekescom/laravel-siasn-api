@@ -50,7 +50,8 @@ class Apim implements TokenProvider
         } catch (CredentialException $e) {
             throw $e;
         } catch (Exception $e) {
-            throw new TokenException('An error occurred while generating the APIM token: '.env('SIASN_APIM_USERNAME'));
+            throw new TokenException('An error occurred while generating the APIM token: '
+                .$this->credentialProvider->getCredentials()->username);
         }
     }
 }
