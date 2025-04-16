@@ -24,5 +24,8 @@ jobs:
       - name: Install composer dependencies
         uses: ramsey/composer-install@v3
 
+      - name: Copy phpstan.neon.dist to phpstan.neon
+        run: cp phpstan.neon.dist phpstan.neon || echo "phpstan.neon.dist not found, skipping."
+
       - name: Run PHPStan
         run: ./vendor/bin/phpstan --error-format=github

@@ -10,7 +10,7 @@ class GenerateApimTokenCommand extends Command
     protected $signature = 'siasn:apim-token
                             {--fresh : Always request a new token}';
 
-    protected $description = 'Generate an APIM Token';
+    protected $description = 'Generate APIM token';
 
     public function __construct(private readonly TokenManager $tokenManager)
     {

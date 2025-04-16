@@ -3,13 +3,13 @@
 use Kanekes\Siasn\Api\Facades\Siasn;
 
 it('can send a GET request to an endpoint', function () {
-    $response = Siasn::get(env('SIASN_GET_REQUEST_ENDPOINT_TEST'));
+    $response = Siasn::get(config('siasn-api.tests.get_endpoint'));
 
     expect($response->successful())->toBeTrue();
 });
 
 it('can send a GET request with SSO to an endpoint', function () {
-    $response = Siasn::withSso()->get(env('SIASN_GET_REQUEST_WISH_SSO_ENDPOINT_TEST'));
+    $response = Siasn::withSso()->get(config('siasn-api.tests.get_with_sso_endpoint'));
 
     expect($response->successful())->toBeTrue();
 });

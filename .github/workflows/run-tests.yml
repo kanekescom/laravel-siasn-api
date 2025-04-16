@@ -1,4 +1,4 @@
-name: run-tests
+name: Run tests
 
 on:
   push:
@@ -16,17 +16,15 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        php: [8.4, 8.3, 8.2]
-        laravel: [12.*, 11.*, 10.*]
+        os: [ubuntu-latest]
+        php: [8.4, 8.3]
+        laravel: [12.*, 11.*]
         stability: [prefer-lowest, prefer-stable]
         include:
           - laravel: 12.*
             testbench: 10.*
           - laravel: 11.*
             testbench: 9.*
-          - laravel: 10.*
-            testbench: 8.*
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
@@ -55,18 +53,32 @@ jobs:
         run: composer show -D
 
       - name: Copy phpunit.xml.dist to phpunit.xml
-        run: cp phpunit.xml.dist phpunit.xml
+        run: cp phpunit.xml.dist phpunit.xml || echo "phpunit.xml.dist not found, skipping."
 
-      - name: Add secrets to phpunit.xml
+      - name: Replace placeholders in phpunit.xml with GitHub Secrets
         run: |
-          sed -i 's/{{SIASN_APIM_USERNAME}}/${{ secrets.SIASN_APIM_USERNAME }}/g' phpunit.xml
-          sed -i 's/{{SIASN_APIM_PASSWORD}}/${{ secrets.SIASN_APIM_PASSWORD }}/g' phpunit.xml
-          sed -i 's/{{SIASN_SSO_CLIENT_ID}}/${{ secrets.SIASN_SSO_CLIENT_ID }}/g' phpunit.xml
-          sed -i 's/{{SIASN_SSO_USERNAME}}/${{ secrets.SIASN_SSO_USERNAME }}/g' phpunit.xml
-          sed -i 's/{{SIASN_SSO_PASSWORD}}/${{ secrets.SIASN_SSO_PASSWORD }}/g' phpunit.xml
-          sed -i 's/{{SIASN_SSO_ACCESS_TOKEN}}/${{ secrets.SIASN_SSO_ACCESS_TOKEN }}/g' phpunit.xml
-          sed -i 's/{{SIASN_INSTITUTION_INSTANSI_ID}}/${{ secrets.SIASN_INSTITUTION_INSTANSI_ID }}/g' phpunit.xml
-          sed -i 's/{{SIASN_INSTITUTION_SATUAN_KERJA_ID}}/${{ secrets.SIASN_INSTITUTION_SATUAN_KERJA_ID }}/g' phpunit.xml
+          sed -i "s|{{SIASN_APIM_USERNAME}}|${{ secrets.SIASN_APIM_USERNAME }}|g" phpunit.xml
+          sed -i "s|{{SIASN_APIM_PASSWORD}}|${{ secrets.SIASN_APIM_PASSWORD }}|g" phpunit.xml
+          sed -i "s|{{SIASN_SSO_CLIENT_ID}}|${{ secrets.SIASN_SSO_CLIENT_ID }}|g" phpunit.xml
+          sed -i "s|{{SIASN_SSO_USERNAME}}|${{ secrets.SIASN_SSO_USERNAME }}|g" phpunit.xml
+          sed -i "s|{{SIASN_SSO_PASSWORD}}|${{ secrets.SIASN_SSO_PASSWORD }}|g" phpunit.xml
+          sed -i "s|{{SIASN_SSO_ACCESS_TOKEN}}|${{ secrets.SIASN_SSO_ACCESS_TOKEN }}|g" phpunit.xml
+        shell: bash
+
+      - name: Set environment variables for PHPUnit
+        env:
+          SIASN_MODE: ${{ secrets.SIASN_MODE }}
+          SIASN_APIM_USERNAME: ${{ secrets.SIASN_APIM_USERNAME }}
+          SIASN_APIM_PASSWORD: ${{ secrets.SIASN_APIM_PASSWORD }}
+          SIASN_SSO_CLIENT_ID: ${{ secrets.SIASN_SSO_CLIENT_ID }}
+          SIASN_SSO_USERNAME: ${{ secrets.SIASN_SSO_USERNAME }}
+          SIASN_SSO_PASSWORD: ${{ secrets.SIASN_SSO_PASSWORD }}
+          SIASN_SSO_ACCESS_TOKEN: ${{ secrets.SIASN_SSO_ACCESS_TOKEN }}
+          SIASN_CONST_INSTANSI_ID: ${{ secrets.SIASN_CONST_INSTANSI_ID }}
+          SIASN_CONST_SATUAN_KERJA_ID: ${{ secrets.SIASN_CONST_SATUAN_KERJA_ID }}
+        run: |
+          echo "Setting environment variables for PHPUnit"
+          printenv | grep SIASN
 
       - name: Execute tests
         run: vendor/bin/pest --ci

@@ -17,15 +17,6 @@ Want to provide tangible support? Use the following platforms to contribute to o
 
 Your support is greatly appreciated!
 
-## Use Pro Version
-
-We also offer a professional version. Contact us at **kanekescom@gmail.com** or **imachmadhadikurnia@gmail.com** (maintainer) for more details.
-
-- Laravel SIASN Referensi Panel
-- Laravel SIASN SIMPEG Panel
-- SIMASN App (Sistem Informasi ASN)
-- SIMANTEL App (Sistem Informasi Manajemen Talenta)
-
 ## Installation
 
 Install the package via Composer:
@@ -50,13 +41,13 @@ php artisan siasn-api:install
 
 ### Token Generator
 
-Generate an APIM Token:
+Generate APIM Token:
 
 ```bash
 php artisan siasn:apim-token
 ```
 
-Generate an SSO Token:
+Generate SSO Token:
 
 ```bash
 php artisan siasn:sso-token
@@ -79,11 +70,13 @@ php artisan siasn:forget-token
 ### Available Token Methods
 
 ```php
+use Kanekes\Siasn\Api\Credentials\Token;
+
 Token::getNewApimToken(); // Always request a new APIM token
-Token::getApimToken(); // Request an APIM token
+Token::getApimToken(); // Request APIM token
 
 Token::getNewSsoToken(); // Always request a new SSO token
-Token::getSsoToken(); // Request an SSO token
+Token::getSsoToken(); // Request SSO token
 
 Token::forget(); // Remove APIM and SSO tokens
 ```
@@ -113,12 +106,16 @@ php artisan siasn:post {endpoint}
 The `Siasn` class uses Laravel's `Http` class (`Illuminate\Support\Facades\Http`):
 
 ```php
+use Kanekes\Siasn\Api\Facades\Siasn;
+
 Siasn::get($endpoint, $params);
 ```
 
 For dual authentication (SSO), use:
 
 ```php
+use Kanekes\Siasn\Api\Facades\Siasn;
+
 Siasn::withSso()->get($endpoint, $params);
 ```
 
