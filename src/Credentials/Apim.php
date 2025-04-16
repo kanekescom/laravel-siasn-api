@@ -21,7 +21,6 @@ class Apim implements TokenProvider
 
     public function getToken(): object
     {
-        env('SIASN_APIM_USERNAME');
         try {
             $credentials = $this->credentialProvider->getCredentials();
             $this->credentialProvider->validateCredentials($credentials);
@@ -38,7 +37,7 @@ class Apim implements TokenProvider
                 ]);
 
             if ($response->failed()) {
-                throw new TokenException('Error encountered during APIM token generation: '.PHP_EOL.$response->body());
+                throw new TokenException('Error encountered during APIM token generation: '.PHP_EOL.env('SIASN_APIM_USERNAME'));
             }
 
             $token = $response->object();
