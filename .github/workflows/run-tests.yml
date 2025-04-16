@@ -52,9 +52,6 @@ jobs:
       - name: List Installed Dependencies
         run: composer show -D
 
-      - name: Copy phpunit.xml.dist to phpunit.xml
-        run: cp phpunit.xml.dist phpunit.xml || echo "phpunit.xml.dist not found, skipping."
-
       - name: Set environment variables for PHPUnit
         env:
           SIASN_MODE: ${{ secrets.SIASN_MODE }}
