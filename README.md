@@ -157,3 +157,6 @@ See our [security policy](../../security/policy) on how to report security vulne
 ## License
 
 The MIT License (MIT). See [License File](LICENSE.md) for details.
+
+
+<!-- Security scan triggered at 2026-09-05 07:46:14 -->
